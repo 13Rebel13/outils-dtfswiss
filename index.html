@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connexion DTF Swiss</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion DTF Swiss</title>
 
-  <!-- Script Outseta -->
-  <script>
-    var o_options = {
-      domain: 'dtfswiss.outseta.com',
-      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+    <!-- Script Outseta -->
+    <script>
+      var o_options = {
+        domain: 'dtfswiss.outseta.com',
+        load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+      };
+    </script>
+    <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <style>
-   <body>
-  <h1>Connexion aux outils DTF Swiss</h1>
-  <div style="width:100%; max-width:500px; margin:auto;">
-    <outseta-auth></outseta-auth>
-  </div>
-</body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #fefefe;
+        padding: 40px;
+        text-align: center;
+      }
+      .auth-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+    </style>
+  </head>
 
-
-  <h1>Connexion aux outils DTF Swiss</h1>
-
-  <outseta-auth></outseta-auth>
-
-</body>
+  <body>
+    <h1>Connexion aux outils DTF Swiss</h1>
+    <div class="auth-container">
+      <outseta-auth></outseta-auth>
+    </div>
+  </body>
 </html>
