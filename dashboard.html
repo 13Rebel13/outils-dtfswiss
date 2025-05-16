@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tableau de bord DTF Swiss</title>
+  <script>
+    var o_options = {
+      domain: 'dtfswiss.outseta.com',
+      load: 'profile,auth,logout'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+</head>
+<body>
+  <h1>Bienvenue sur les outils DTF Swiss</h1>
+  <p><outseta-user-first-name></outseta-user-first-name>, tu es bien connecté.</p>
+
+  <h2>Outils disponibles :</h2>
+  <ul>
+    <li><a href="https://tools.dtfswiss.ch/remove-background">🧼 Supprimer le fond</a></li>
+    <li><a href="https://tools.dtfswiss.ch/vectorizer">🎨 Vectoriser</a></li>
+    <li><a href="https://tools.dtfswiss.ch/upscale">🔍 Améliorer l’image</a></li>
+  </ul>
+
+  <p><outseta-logout></outseta-logout></p>
+</body>
+</html>
