@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Connexion DTF Swiss</title>
 
   <!-- Script Outseta -->
@@ -13,8 +13,23 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #f9f9f9;
+    }
+    outseta-auth {
+      max-width: 400px;
+      margin: auto;
+      display: block;
+    }
+  </style>
 </head>
 <body>
+  <h1>Connexion aux outils DTF Swiss</h1>
   <outseta-auth></outseta-auth>
 </body>
 </html>
