@@ -139,46 +139,6 @@
           }
         });
       });
-
-      function decrementCreditsAndRedirect(url) {
-        Outseta.getCurrentUser().then(function(user) {
-          if (!user || !user.person) return alert("Utilisateur non trouvé");
-
-          let credits = user.person.Crédits;
-          if (!credits || credits <= 0) {
-            alert("Plus de crédits disponibles.");
-            return;
-          }
-
-          const updated = {
-            Crédits: credits - 1
-          };
-
-          Outseta.updatePerson(user.person.Uid, updated)
-            .then(() => {
-              window.location.href = url;
-            })
-            .catch((err) => {
-              console.error("Erreur de mise à jour des crédits:", err);
-              alert("Erreur de crédit. Merci de réessayer.");
-            });
-        });
-      }
-
-      document.getElementById("btn-supprimer-fond")?.addEventListener("click", function(e) {
-        e.preventDefault();
-        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/supprimer-le-fond");
-      });
-
-      document.getElementById("btn-ameliorer-image")?.addEventListener("click", function(e) {
-        e.preventDefault();
-        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/ameliorer-image");
-      });
-
-      document.getElementById("btn-vectoriser")?.addEventListener("click", function(e) {
-        e.preventDefault();
-        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/vectoriser");
-      });
     });
   </script>
 </body>
