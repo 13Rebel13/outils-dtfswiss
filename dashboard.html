@@ -109,19 +109,19 @@
 
   <div class="tools-container">
     <div class="tool">
-      <a href="https://dtfswiss.ch/pages/supprimer-le-fond">
+      <a id="btn-supprimer-fond" href="https://dtfswiss.ch/pages/supprimer-le-fond">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
       </a>
       <div class="tool-label">Supprimer le fond</div>
     </div>
     <div class="tool">
-      <a href="https://dtfswiss.ch/pages/ameliorer-image">
+      <a id="btn-ameliorer-image" href="https://dtfswiss.ch/pages/ameliorer-image">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
       </a>
       <div class="tool-label">Améliorer l'image</div>
     </div>
     <div class="tool">
-      <a href="https://dtfswiss.ch/pages/vectoriser">
+      <a id="btn-vectoriser" href="https://dtfswiss.ch/pages/vectoriser">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
       </a>
       <div class="tool-label">Vectoriser</div>
@@ -138,6 +138,46 @@
             document.getElementById("credits-count").textContent = "0";
           }
         });
+      });
+
+      function decrementCreditsAndRedirect(url) {
+        Outseta.getCurrentUser().then(function(user) {
+          if (!user || !user.person) return alert("Utilisateur non trouvé");
+
+          let credits = user.person.Crédits;
+          if (!credits || credits <= 0) {
+            alert("Plus de crédits disponibles.");
+            return;
+          }
+
+          const updated = {
+            Crédits: credits - 1
+          };
+
+          Outseta.updatePerson(user.person.Uid, updated)
+            .then(() => {
+              window.location.href = url;
+            })
+            .catch((err) => {
+              console.error("Erreur de mise à jour des crédits:", err);
+              alert("Erreur de crédit. Merci de réessayer.");
+            });
+        });
+      }
+
+      document.getElementById("btn-supprimer-fond")?.addEventListener("click", function(e) {
+        e.preventDefault();
+        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/supprimer-le-fond");
+      });
+
+      document.getElementById("btn-ameliorer-image")?.addEventListener("click", function(e) {
+        e.preventDefault();
+        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/ameliorer-image");
+      });
+
+      document.getElementById("btn-vectoriser")?.addEventListener("click", function(e) {
+        e.preventDefault();
+        decrementCreditsAndRedirect("https://dtfswiss.ch/pages/vectoriser");
       });
     });
   </script>
