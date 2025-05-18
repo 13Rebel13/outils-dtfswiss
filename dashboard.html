@@ -3,137 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tableau de bord - DTF Swiss</title>
-
+  <title>Dashboard DTF Swiss</title>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #f6f9fc;
       text-align: center;
+      padding: 40px;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #ffffff;
-      padding: 20px;
-      border-bottom: 1px solid #e0e0e0;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .logout-btn {
-      background-color: #ff5c5c;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    main {
-      padding: 40px 20px;
-    }
-
-    h2 {
-      font-size: 2rem;
+    h1 {
+      font-size: 2.5rem;
       margin-bottom: 10px;
     }
 
-    p {
-      font-size: 1.1rem;
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
     }
 
-    #credits {
+    .logout {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #ff4d4d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
       font-weight: bold;
-      margin-bottom: 40px;
+      border-radius: 6px;
+      cursor: pointer;
     }
 
-    .tools {
+    .tools-container {
       display: flex;
       justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
       flex-wrap: wrap;
-      gap: 30px;
     }
 
     .tool {
-      background-color: #fff;
-      padding: 0;
-      border-radius: 15px;
-      width: 220px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .tool:hover {
-      transform: translateY(-5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 220px;
     }
 
     .tool img {
-      width: 100%;
-      border-radius: 15px;
-      display: block;
+      width: 225px; /* 150% de 150px */
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .tool img:hover {
+      transform: scale(1.05);
+    }
+
+    .tool span {
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    #creditsDisplay {
+      font-weight: bold;
     }
   </style>
+</head>
+<body>
+  <button class="logout" onclick="Outseta.logout()">Déconnexion</button>
+
+  <h1>Bienvenue sur les outils DTF Swiss</h1>
+  <p class="subtitle">Tu es bien connecté.</p>
+  <p><span style="font-weight:bold;">Crédits disponibles :</span> <span id="creditsDisplay">...</span></p>
+
+  <div class="tools-container">
+    <div class="tool">
+      <a href="https://dtfswiss.ch/tools/remove-background" target="_blank">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
+      </a>
+      <span>Supprimer le fond</span>
+    </div>
+    <div class="tool">
+      <a href="https://dtfswiss.ch/tools/upscale-image" target="_blank">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
+      </a>
+      <span>Améliorer l'image</span>
+    </div>
+    <div class="tool">
+      <a href="https://dtfswiss.ch/tools/vectorize" target="_blank">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser" />
+      </a>
+      <span>Vectoriser</span>
+    </div>
+  </div>
 
   <script>
     var o_options = {
       domain: 'dtfswiss.outseta.com',
       load: 'auth'
     };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <script>
     document.addEventListener("DOMContentLoaded", function () {
-      Outseta.on('authentication.user', function (user) {
-        const firstName = user.firstName || "Utilisateur";
-        const credits = user.credits || 0;
-
-        document.getElementById("welcome").textContent = `Bonjour, ${firstName}`;
-        document.getElementById("credits").textContent = `Crédits disponibles : ${credits}`;
-      });
-
-      document.getElementById("logout").addEventListener("click", function () {
-        Outseta.logout();
+      Outseta.on("authentication.user", function (user) {
+        const userCredits = user.person.Crédits ?? 0;
+        document.getElementById("creditsDisplay").textContent = userCredits;
       });
     });
   </script>
-</head>
-
-<body>
-  <header>
-    <h1 id="welcome">Bonjour</h1>
-    <button id="logout" class="logout-btn">Déconnexion</button>
-  </header>
-
-  <main>
-    <h2>Bienvenue sur les outils DTF Swiss</h2>
-    <p>Tu es bien connecté.</p>
-    <div id="credits">Crédits disponibles : ...</div>
-
-    <div class="tools">
-      <a href="remove-background.html" class="tool">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
-      </a>
-
-      <a href="enhance-image.html" class="tool">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
-      </a>
-
-      <a href="vectorize.html" class="tool">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser" />
-      </a>
-    </div>
-  </main>
 </body>
 </html>
