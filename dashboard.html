@@ -2,26 +2,61 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Tableau de bord DTF Swiss</title>
-  <script>
-    var o_options = {
-      domain: 'dtfswiss.outseta.com',
-      load: 'profile,auth,logout'
-    };
-  </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <title>Dashboard - Outils DTF Swiss</title>
+  <style>
+    body {
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .tools {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .tool {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 220px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .tool a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .tool img {
+      width: 64px;
+      height: 64px;
+    }
+  </style>
 </head>
 <body>
   <h1>Bienvenue sur les outils DTF Swiss</h1>
-  <p><outseta-user-first-name></outseta-user-first-name>, tu es bien connecté.</p>
-
-  <h2>Outils disponibles :</h2>
-  <ul>
-    <li><a href="https://tools.dtfswiss.ch/remove-background">🧼 Supprimer le fond</a></li>
-    <li><a href="https://tools.dtfswiss.ch/vectorizer">🎨 Vectoriser</a></li>
-    <li><a href="https://tools.dtfswiss.ch/upscale">🔍 Améliorer l’image</a></li>
-  </ul>
-
-  <p><outseta-logout></outseta-logout></p>
+  <p>Tu es bien connecté.</p>
+  <div class="tools">
+    <div class="tool">
+      <img src="https://img.icons8.com/ios-filled/100/null/erase.png" alt="BG">
+      <a href="remove-background.html">Supprimer le fond</a>
+    </div>
+    <div class="tool">
+      <img src="https://img.icons8.com/ios-filled/100/null/vector.png" alt="Vector">
+      <a href="vectorizer.html">Vectoriser</a>
+    </div>
+    <div class="tool">
+      <img src="https://img.icons8.com/ios-filled/100/null/hd.png" alt="Upscale">
+      <a href="upscale.html">Améliorer l'image</a>
+    </div>
+  </div>
 </body>
 </html>
