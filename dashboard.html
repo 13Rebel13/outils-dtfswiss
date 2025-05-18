@@ -2,86 +2,115 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard - Outils DTF Swiss</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard DTF Swiss</title>
   <style>
     body {
-      background: #f4f6f8;
-      font-family: "Segoe UI", sans-serif;
-      text-align: center;
-      padding: 50px 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
       margin: 0;
+      padding: 0;
+      text-align: center;
     }
-    h1 {
-      font-size: 2.5rem;
-      color: #222;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #ffffff;
+      padding: 20px 40px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #333;
+    }
+    .logout {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    main {
+      margin-top: 50px;
+    }
+    h2 {
+      font-size: 2rem;
       margin-bottom: 10px;
     }
     p {
+      font-size: 1.1rem;
       color: #555;
       margin-bottom: 40px;
     }
     .tools {
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 40px;
       flex-wrap: wrap;
     }
     .tool {
-      background: white;
-      border-radius: 20px;
-      padding: 30px 20px;
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 30px;
       width: 220px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       text-align: center;
-      transition: transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
     }
     .tool:hover {
       transform: translateY(-5px);
     }
     .tool img {
-      width: 80px;
-      height: 80px;
+      width: 64px;
+      height: 64px;
       margin-bottom: 15px;
     }
     .tool a {
       text-decoration: none;
-      color: #111;
+      color: #222;
       font-weight: bold;
-      font-size: 1.1rem;
       display: block;
-    }
-    @media screen and (max-width: 700px) {
-      .tools {
-        flex-direction: column;
-        align-items: center;
-      }
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Bonjour, Daniel</h1>
+    <button class="logout" onclick="alert('Déconnexion...')">Déconnexion</button>
+  </header>
 
-  <h1>Bienvenue sur les outils DTF Swiss</h1>
-  <p>Tu es bien connecté.</p>
+  <main>
+    <h2>Bienvenue sur les outils DTF Swiss</h2>
+    <p>Tu es bien connecté.</p>
+    <div class="tools">
 
-  <div class="tools">
-    <!-- Supprimer le fond -->
-    <div class="tool">
-      <img src="<img src="https://img.icons8.com/color/96/magic-eraser.png" alt="Supprimer le fond">" alt="Supprimer le fond">
-      <a href="remove-background.html">Supprimer le fond</a>
+      <div class="tool">
+        <a href="remove-background.html">
+          <img src="https://img.icons8.com/color/96/magic-eraser.png" alt="Supprimer le fond">
+          Supprimer le fond
+        </a>
+      </div>
+
+      <div class="tool">
+        <a href="upscale.html">
+          <img src="https://img.icons8.com/color/96/high-definition.png" alt="Améliorer l'image">
+          Améliorer l'image
+        </a>
+      </div>
+
+      <div class="tool">
+        <a href="vectorizer.html">
+          <img src="https://img.icons8.com/color/96/vector.png" alt="Vectoriser">
+          Vectoriser
+        </a>
+      </div>
+
     </div>
-
-    <!-- Améliorer l'image -->
-    <div class="tool">
-      <img src="https://img.icons8.com/color/96/hd.png" alt="Améliorer l'image">
-      <a href="upscale.html">Améliorer l'image</a>
-    </div>
-
-    <!-- Vectoriser -->
-    <div class="tool">
-      <img src="https://img.icons8.com/color/96/vector.png" alt="Vectoriser">
-      <a href="vectorizer.html">Vectoriser</a>
-    </div>
-  </div>
-
+  </main>
 </body>
 </html>
