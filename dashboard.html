@@ -3,113 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard DTF Swiss</title>
+  <title>Tableau de bord - DTF Swiss</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f7fa;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fc;
+      color: #333;
       text-align: center;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background-color: #ffffff;
-      padding: 20px 40px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
     }
+
     header h1 {
       margin: 0;
       font-size: 1.5rem;
-      color: #333;
     }
-    .logout {
-      background-color: #ff4d4d;
+
+    .logout-btn {
+      background-color: #ff5c5c;
       color: white;
       border: none;
       padding: 10px 20px;
       border-radius: 6px;
+      font-size: 1rem;
       cursor: pointer;
-      font-weight: bold;
     }
+
     main {
-      margin-top: 50px;
+      padding: 40px 20px;
     }
+
     h2 {
       font-size: 2rem;
       margin-bottom: 10px;
     }
+
     p {
       font-size: 1.1rem;
-      color: #555;
+    }
+
+    #credits {
+      font-weight: bold;
       margin-bottom: 40px;
     }
+
     .tools {
       display: flex;
       justify-content: center;
-      gap: 40px;
       flex-wrap: wrap;
+      gap: 30px;
     }
+
     .tool {
       background-color: #fff;
-      border-radius: 15px;
       padding: 30px;
+      border-radius: 15px;
       width: 220px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+      color: inherit;
     }
+
     .tool:hover {
       transform: translateY(-5px);
     }
+
     .tool img {
-      width: 64px;
-      height: 64px;
+      width: 60px;
+      height: 60px;
       margin-bottom: 15px;
     }
-    .tool a {
-      text-decoration: none;
-      color: #222;
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
+
+    .tool span {
+      font-weight: 600;
+      font-size: 1.1rem;
     }
   </style>
+
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script>
+    var o_options = {
+      domain: 'dtfswiss.outseta.com',
+      load: 'auth'
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      Outseta.on('authentication.user', function (user) {
+        const firstName = user.firstName || "Utilisateur";
+        const credits = user.credits || 0;
+
+        document.getElementById("welcome").textContent = `Bonjour, ${firstName}`;
+        document.getElementById("credits").textContent = `Crédits disponibles : ${credits}`;
+      });
+
+      document.getElementById("logout").addEventListener("click", function () {
+        Outseta.logout();
+      });
+    });
+  </script>
 </head>
+
 <body>
   <header>
-    <h1>Bonjour, Daniel</h1>
-    <button class="logout" onclick="alert('Déconnexion...')">Déconnexion</button>
+    <h1 id="welcome">Bonjour</h1>
+    <button id="logout" class="logout-btn">Déconnexion</button>
   </header>
 
   <main>
     <h2>Bienvenue sur les outils DTF Swiss</h2>
     <p>Tu es bien connecté.</p>
+    <div id="credits">Crédits disponibles : ...</div>
+
     <div class="tools">
+      <a href="remove-background.html" class="tool">
+        <img src="https://cdn.shopify.com/s/files/1/1234/5678/files/remove-bg.png" alt="Supprimer le fond" />
+        <span>Supprimer le fond</span>
+      </a>
 
-      <div class="tool">
-        <a href="remove-background.html">
-          <img src="https://img.icons8.com/color/96/magic-eraser.png" alt="Supprimer le fond">
-          Supprimer le fond
-        </a>
-      </div>
+      <a href="enhance-image.html" class="tool">
+        <img src="https://cdn.shopify.com/s/files/1/1234/5678/files/improve-image.png" alt="Améliorer l'image" />
+        <span>Améliorer l'image</span>
+      </a>
 
-      <div class="tool">
-        <a href="upscale.html">
-          <img src="https://img.icons8.com/color/96/high-definition.png" alt="Améliorer l'image">
-          Améliorer l'image
-        </a>
-      </div>
-
-      <div class="tool">
-        <a href="vectorizer.html">
-          <img src="https://img.icons8.com/color/96/vector.png" alt="Vectoriser">
-          Vectoriser
-        </a>
-      </div>
-
+      <a href="vectorize.html" class="tool">
+        <img src="https://cdn.shopify.com/s/files/1/1234/5678/files/vectorize.png" alt="Vectoriser" />
+        <span>Vectoriser</span>
+      </a>
     </div>
   </main>
 </body>
