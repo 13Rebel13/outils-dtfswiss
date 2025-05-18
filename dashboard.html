@@ -1,145 +1,134 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard DTF Swiss</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord DTF Swiss</title>
   <script>
-    var o_options = {
+    window._o_options = {
       domain: 'dtfswiss.outseta.com',
       load: 'auth'
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="_o_options"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f6f9fc;
+      background-color: #f7fafd;
       text-align: center;
-      padding: 40px;
+      margin: 0;
+      padding: 0;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    .logout {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #ff4d4d;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .credits-box {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background-color: #ffffff;
-      border: 2px solid #00b894;
-      border-radius: 25px;
-      padding: 12px 20px;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    .header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    .credits-box button {
-      background-color: #00b894;
+    .credits-bubble {
+      background-color: #66ffff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .buy-btn {
+      background-color: #66ffff;
       border: none;
-      padding: 6px 12px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .logout-btn {
+      background-color: #ff5e5e;
       color: white;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-weight: bold;
       cursor: pointer;
     }
-
+    h1 {
+      margin-top: 40px;
+      font-size: 32px;
+    }
     .tools-container {
       display: flex;
       justify-content: center;
-      gap: 50px;
-      margin-top: 60px;
+      gap: 60px;
+      margin-top: 40px;
       flex-wrap: wrap;
     }
-
     .tool {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 220px;
-    }
-
-    .tool img {
-      width: 225px; /* 150% */
-      height: auto;
+      width: 225px;
+      height: 225px;
+      background-color: white;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease;
-      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
     }
-
-    .tool img:hover {
+    .tool:hover {
       transform: scale(1.05);
     }
-
-    .tool span {
-      margin-top: 12px;
+    .tool img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+    }
+    .tool-label {
+      margin-top: 10px;
       font-weight: bold;
-      font-size: 1.1rem;
-      color: #333;
     }
   </style>
 </head>
 <body>
-  <div class="credits-box">
-    Crédits : <span id="creditsDisplay">...</span>
-    <button onclick="window.open('https://dtfswiss.ch/products/acheter-des-crédits')">Acheter</button>
+  <div class="header">
+    <div class="credits-bubble">
+      Crédits : <span id="credits-count">...</span>
+      <button class="buy-btn" onclick="window.location.href='https://dtfswiss.ch/pages/abonnement'">Acheter</button>
+    </div>
+    <button class="logout-btn" onclick="Outseta.logout()">Déconnexion</button>
   </div>
 
-  <button class="logout" onclick="Outseta.logout()">Déconnexion</button>
-
   <h1>Bienvenue sur les outils DTF Swiss</h1>
-  <p class="subtitle">Tu es bien connecté.</p>
+  <p>Tu es bien connecté.</p>
 
   <div class="tools-container">
     <div class="tool">
-      <a href="https://dtfswiss.ch/tools/remove-background" target="_blank">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
+      <a href="https://dtfswiss.ch/pages/supprimer-le-fond">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
       </a>
-      <span>Supprimer le fond</span>
+      <div class="tool-label">Supprimer le fond</div>
     </div>
     <div class="tool">
-      <a href="https://dtfswiss.ch/tools/upscale-image" target="_blank">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
+      <a href="https://dtfswiss.ch/pages/ameliorer-image">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
       </a>
-      <span>Améliorer l'image</span>
+      <div class="tool-label">Améliorer l'image</div>
     </div>
     <div class="tool">
-      <a href="https://dtfswiss.ch/tools/vectorize" target="_blank">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser" />
+      <a href="https://dtfswiss.ch/pages/vectoriser">
+        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
       </a>
-      <span>Vectoriser</span>
+      <div class="tool-label">Vectoriser</div>
     </div>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      Outseta.on("authentication.user", function (user) {
-        const userCredits = user.person.Crédits ?? 0;
-        document.getElementById("creditsDisplay").textContent = userCredits;
+      Outseta.onInitialize(function () {
+        Outseta.getCurrentUser().then(function (user) {
+          if (user && user.person && user.person.Crédits !== undefined) {
+            document.getElementById("credits-count").textContent = user.person.Crédits;
+          } else {
+            document.getElementById("credits-count").textContent = "0";
+          }
+        });
       });
     });
   </script>
