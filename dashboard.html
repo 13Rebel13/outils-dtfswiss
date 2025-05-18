@@ -5,58 +5,83 @@
   <title>Dashboard - Outils DTF Swiss</title>
   <style>
     body {
-      background: #f4f4f4;
-      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      font-family: "Segoe UI", sans-serif;
       text-align: center;
-      padding: 40px;
+      padding: 50px 20px;
+      margin: 0;
     }
     h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: #222;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #555;
+      margin-bottom: 40px;
     }
     .tools {
       display: flex;
       justify-content: center;
-      gap: 40px;
+      gap: 30px;
       flex-wrap: wrap;
     }
     .tool {
       background: white;
-      border-radius: 10px;
-      padding: 20px;
+      border-radius: 20px;
+      padding: 30px 20px;
       width: 220px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
       text-align: center;
+      transition: transform 0.2s ease;
     }
-    .tool a {
-      display: block;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-      margin-top: 10px;
+    .tool:hover {
+      transform: translateY(-5px);
     }
     .tool img {
-      width: 64px;
-      height: 64px;
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+    }
+    .tool a {
+      text-decoration: none;
+      color: #111;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: block;
+    }
+    @media screen and (max-width: 700px) {
+      .tools {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
+
   <h1>Bienvenue sur les outils DTF Swiss</h1>
   <p>Tu es bien connecté.</p>
+
   <div class="tools">
+    <!-- Supprimer le fond -->
     <div class="tool">
-      <img src="https://img.icons8.com/ios-filled/100/null/erase.png" alt="BG">
+      <img src="https://img.icons8.com/color/96/null/magic-eraser.png" alt="Supprimer le fond">
       <a href="remove-background.html">Supprimer le fond</a>
     </div>
+
+    <!-- Améliorer l'image -->
     <div class="tool">
-      <img src="https://img.icons8.com/ios-filled/100/null/vector.png" alt="Vector">
-      <a href="vectorizer.html">Vectoriser</a>
-    </div>
-    <div class="tool">
-      <img src="https://img.icons8.com/ios-filled/100/null/hd.png" alt="Upscale">
+      <img src="https://img.icons8.com/color/96/hd.png" alt="Améliorer l'image">
       <a href="upscale.html">Améliorer l'image</a>
     </div>
+
+    <!-- Vectoriser -->
+    <div class="tool">
+      <img src="https://img.icons8.com/color/96/vector.png" alt="Vectoriser">
+      <a href="vectorizer.html">Vectoriser</a>
+    </div>
   </div>
+
 </body>
 </html>
