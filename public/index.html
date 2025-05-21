@@ -1,28 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Outils DTF Swiss</title>
+  <meta charset="UTF-8" />
+  <title>Connexion aux outils DTF Swiss</title>
   <style>
-    body { font-family: sans-serif; background: #f0f0f0; text-align: center; padding: 3rem; }
-    h1 { color: #2c3e50; margin-bottom: 2rem; }
-    .tool-btn {
-      display: inline-block;
-      margin: 1rem;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      background-color: #3498db;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 50px;
     }
-    .tool-btn:hover { background-color: #2980b9; }
+    h1 {
+      font-size: 2rem;
+      color: #222;
+      margin-bottom: 30px;
+    }
+    .tools {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .tools a {
+      display: inline-block;
+      background: #3498db;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+    .tools a:hover {
+      background: #2980b9;
+    }
   </style>
 </head>
 <body>
-  <h1>Outils DTF Swiss</h1>
-  <a href="/remove-background.html" class="tool-btn">Suppression de fond</a>
-  <a href="/upscale.html" class="tool-btn">Amélioration d’image</a>
-  <a href="/vectorizer.html" class="tool-btn">Vectorisation</a>
+
+  <h1>Connexion aux outils DTF Swiss</h1>
+
+  <!-- Widget Outseta (affiche connexion / profil) -->
+  <script src="https://cdn.outseta.com/outseta.min.js"
+          data-domain="outils-dtfswiss.outseta.com"
+          data-widget="auth"></script>
+
+  <!-- Liens vers les outils -->
+  <div class="tools">
+    <a href="remove-background.html">Suppression de fond</a>
+    <a href="upscale.html">Amélioration d’image</a>
+    <a href="vectorizer.html">Vectorisation</a>
+  </div>
+
 </body>
 </html>
