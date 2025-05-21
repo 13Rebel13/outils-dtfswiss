@@ -132,10 +132,11 @@
     document.addEventListener("DOMContentLoaded", function () {
       Outseta.onInitialize(function () {
         Outseta.getCurrentUser().then(function (user) {
-          if (user && user.person && user.person.Crédits !== undefined) {
-            document.getElementById("credits-count").textContent = user.person.Crédits;
+          if (!user || !user.Uid) {
+            window.location.href = "https://outils-dtfswiss.outseta.com/auth?widgetMode=login#o-anonymous";
           } else {
-            document.getElementById("credits-count").textContent = "0";
+            const credits = user.person && user.person.Crédits !== undefined ? user.person.Crédits : "0";
+            document.getElementById("credits-count").textContent = credits;
           }
         });
       });
