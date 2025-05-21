@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion aux outils DTF Swiss</title>
+  <script>
+    var o_options = {
+      domain: 'outils-dtfswiss.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
       text-align: center;
-      padding: 50px;
+      padding: 100px 20px;
     }
     h1 {
-      font-size: 2rem;
       color: #222;
-      margin-bottom: 30px;
     }
-    .tools {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
-    }
-    .tools a {
+    .button {
       display: inline-block;
-      background: #3498db;
-      color: #fff;
+      margin: 20px 10px;
       padding: 15px 30px;
-      border-radius: 10px;
+      background-color: #0969A0;
+      color: white;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      transition: 0.3s;
+      font-size: 18px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease-in-out;
     }
-    .tools a:hover {
-      background: #2980b9;
+    .button:hover {
+      background-color: #06527a;
     }
   </style>
 </head>
@@ -41,17 +41,10 @@
 
   <h1>Connexion aux outils DTF Swiss</h1>
 
-  <!-- Widget Outseta (affiche connexion / profil) -->
-  <script src="https://cdn.outseta.com/outseta.min.js"
-          data-domain="outils-dtfswiss.outseta.com"
-          data-widget="auth"></script>
-
-  <!-- Liens vers les outils -->
-  <div class="tools">
-    <a href="remove-background.html">Suppression de fond</a>
-    <a href="upscale.html">Amélioration d’image</a>
-    <a href="vectorizer.html">Vectorisation</a>
-  </div>
+  <a class="button" href="https://outils-dtfswiss.outseta.com/auth?widgetMode=login#o-anonymous">Connexion</a>
+  <a class="button" href="https://outils-dtfswiss.outseta.com/auth?widgetMode=register#o-anonymous">Créer un compte</a>
+  <a class="button" href="https://outils-dtfswiss.outseta.com/profile#o-authenticated">Mon compte</a>
+  <a class="button" href="#o-logout-link">Déconnexion</a>
 
 </body>
 </html>
