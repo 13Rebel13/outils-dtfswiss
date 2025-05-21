@@ -1,159 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Tableau de bord DTF Swiss</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Tableau de bord</title>
   <script>
-    window._o_options = {
-      domain: 'dtfswiss.outseta.com',
-      load: 'auth'
+    // Configuration d'Outseta
+    var o_options = {
+      domain: 'votre-sous-domaine.outseta.com', // Remplacez par votre sous-domaine Outseta
+      load: 'auth,nocode,profile',
+      tokenStorage: 'local', // Permet de maintenir la session utilisateur
+      monitorDom: true // Utile si vous utilisez une SPA
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="_o_options"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7fafd;
-      margin: 0;
-      padding: 0;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .credits-bubble {
-      background-color: #ffffff;
-      border: 2px solid #00e6e6;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-    }
-
-    .buy-btn {
-      background-color: #ffffff;
-      color: black;
-      border: 2px solid #00e6e6;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-
-    .buy-btn:hover {
-      background-color: #00e6e6;
-      color: white;
-    }
-
-    .logout-btn {
-      background-color: #ff5e5e;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    p {
-      text-align: center;
-    }
-
-    .tools-container {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
-      margin-top: 40px;
-      padding: 0 20px;
-    }
-
-    .tool {
-      width: 250px;
-      background-color: white;
-      border-radius: 20px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s;
-    }
-
-    .tool:hover {
-      transform: scale(1.05);
-    }
-
-    .tool img {
-      width: 100%;
-      border-radius: 15px;
-    }
-
-    .tool-label {
-      font-weight: bold;
-      margin-top: 10px;
-    }
-  </style>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 </head>
 <body>
-  <div class="header">
-    <div class="credits-bubble">
-      Crédits : <span id="credits-count">...</span>
-      <button class="buy-btn" onclick="window.location.href='https://dtfswiss.ch/pages/abonnement'">Acheter</button>
-    </div>
-    <button class="logout-btn" onclick="Outseta.logout()">Déconnexion</button>
-  </div>
-
-  <h1>Bienvenue sur les outils DTF Swiss</h1>
-  <p>Tu es bien connecté.</p>
-
-  <div class="tools-container">
-    <div class="tool">
-      <a href="https://dtfswiss.ch/pages/supprimer-le-fond">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
-      </a>
-      <div class="tool-label">Supprimer le fond</div>
-    </div>
-
-    <div class="tool">
-      <a href="https://dtfswiss.ch/pages/ameliorer-image">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
-      </a>
-      <div class="tool-label">Améliorer l'image</div>
-    </div>
-
-    <div class="tool">
-      <a href="https://dtfswiss.ch/pages/vectoriser">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
-      </a>
-      <div class="tool-label">Vectoriser</div>
-    </div>
-  </div>
+  <h1>Bienvenue sur votre tableau de bord</h1>
+  <p>Crédits disponibles : <strong id="credit-count">Chargement...</strong></p>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      Outseta.getCurrentUser()
-        .then(function (user) {
-          const credits = user?.person?.Credits ?? 0;
-          document.getElementById("credits-count").textContent = credits;
-        })
-        .catch(function (error) {
-          console.error("Erreur lors du chargement des crédits :", error);
-          document.getElementById("credits-count").textContent = "Erreur";
-        });
+    // Attendre que le DOM soit prêt
+    document.addEventListener('DOMContentLoaded', function () {
+      // Vérifier si Outseta est chargé
+      if (typeof Outseta === 'undefined') {
+        console.error('Outseta n\'est pas défini. Vérifiez que le script est correctement chargé.');
+        return;
+      }
+
+      // Récupérer les informations de l'utilisateur
+      Outseta.getUser().then(function (user) {
+        if (user && user.CustomProperties && user.CustomProperties.Credits !== undefined) {
+          document.getElementById('credit-count').textContent = user.CustomProperties.Credits;
+        } else {
+          document.getElementById('credit-count').textContent = 'Non disponible';
+          console.warn('Le champ "Credits" n\'est pas défini dans les propriétés personnalisées de l\'utilisateur.');
+        }
+      }).catch(function (error) {
+        console.error('Erreur lors de la récupération des informations utilisateur :', error);
+        document.getElementById('credit-count').textContent = 'Erreur';
+      });
     });
   </script>
 </body>
