@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DTF Swiss - Dashboard</title>
+  <title>Outils DTF Swiss</title>
 
-  <!-- Initialisation Outseta (⚠️ domaine + orgUid requis) -->
+  <!-- Outseta config -->
   <script>
     window.outseta = window.outseta || {};
-    outseta.orgUid = "rm0j72Y9"; // Remplace ici si ton UID a changé
-    outseta.domain = "outils-dtfswiss"; // Très important (pas ton domaine complet)
+    outseta.orgUid = "rm0j72Y9"; // ton UID correct
+    outseta.domain = "outils-dtfswiss"; // ton sous-domaine correct
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
@@ -17,123 +17,109 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f6f9fc;
+      background-color: #f3f6fb;
       text-align: center;
     }
-
-    .header {
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
-      background-color: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      background-color: #ffffff;
+      padding: 15px 30px;
+      border-bottom: 1px solid #ddd;
     }
-
-    .credits-container {
+    .credits-box {
+      background-color: #ffffff;
+      border: 2px solid #00bcd4;
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      font-size: 18px;
-      padding: 10px 20px;
-      border: 2px solid #00c3ff;
-      border-radius: 40px;
+      gap: 12px;
     }
-
-    .tools {
+    .tools-container {
       display: flex;
       justify-content: center;
       gap: 40px;
-      padding: 60px 20px;
+      padding: 40px 20px;
       flex-wrap: wrap;
     }
-
     .tool {
-      background-color: white;
-      padding: 20px;
+      background-color: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      width: 220px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 240px;
       transition: transform 0.2s ease;
     }
-
     .tool:hover {
-      transform: scale(1.05);
+      transform: translateY(-4px);
     }
-
     .tool img {
       width: 100%;
-      border-radius: 15px;
+      border-radius: 12px;
     }
-
     .tool a {
-      text-decoration: none;
-      font-weight: bold;
       display: block;
       margin-top: 10px;
-      color: black;
-    }
-
-    .logout {
-      background-color: #ff6b6b;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 20px;
-      color: white;
-      cursor: pointer;
       font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+    .logout-btn {
+      background-color: #ef5350;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="credits-container">
-      <span>Crédits : <span id="credits-value">...</span></span>
-      <button onclick="window.location.href='/acheter.html'">Acheter</button>
-    </div>
-    <button class="logout" onclick="Outseta.logout()">Déconnexion</button>
-  </div>
 
-  <h1>Bienvenue sur les outils DTF Swiss</h1>
-  <p>Tu es bien connecté.</p>
+  <header>
+    <div class="credits-box">
+      Crédits : <span id="credit-count">...</span>
+      <a href="https://outils-dtfswiss.ch/acheter.html">
+        <button>Acheter</button>
+      </a>
+    </div>
+    <button class="logout-btn" onclick="OutsetaAuth.logout()">Déconnexion</button>
+  </header>
 
-  <div class="tools">
-    <div class="tool">
-      <img src="https://cdn.pixabay.com/photo/2017/09/25/13/12/avatar-2788871_1280.png" alt="Supprimer le fond" />
-      <a href="/tools/supprimer-fond.html">Supprimer le fond</a>
+  <main>
+    <h1>Bienvenue sur les outils DTF Swiss</h1>
+    <p>Tu es bien connecté.</p>
+
+    <div class="tools-container">
+      <div class="tool">
+        <img src="https://i.imgur.com/b9uWi1c.png" alt="Supprimer le fond">
+        <a href="/bg-removal.html">Supprimer le fond</a>
+      </div>
+      <div class="tool">
+        <img src="https://i.imgur.com/UoNHZFx.png" alt="Améliorer l'image">
+        <a href="/upscale.html">Améliorer l'image</a>
+      </div>
+      <div class="tool">
+        <img src="https://i.imgur.com/HVgZPny.png" alt="Vectoriser">
+        <a href="/vectorizer.html">Vectoriser</a>
+      </div>
     </div>
-    <div class="tool">
-      <img src="https://cdn.pixabay.com/photo/2021/04/20/09/35/avatar-6190015_1280.png" alt="Améliorer l'image" />
-      <a href="/tools/ameliorer-image.html">Améliorer l'image</a>
-    </div>
-    <div class="tool">
-      <img src="https://cdn.pixabay.com/photo/2022/01/17/15/49/avatar-6945666_1280.png" alt="Vectoriser" />
-      <a href="/tools/vectoriser.html">Vectoriser</a>
-    </div>
-  </div>
+  </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Attendre que Outseta soit chargé
-      const waitForOutseta = setInterval(() => {
-        if (window.Outseta && Outseta.getCurrentUser) {
-          clearInterval(waitForOutseta);
-
-          Outseta.getCurrentUser().then(user => {
-            if (user && user.CrmPerson) {
-              const credits = user.CrmPerson.Credits;
-              document.getElementById("credits-value").textContent = credits ?? "0";
-            } else {
-              document.getElementById("credits-value").textContent = "0";
-            }
-          }).catch(err => {
-            console.error("Erreur récupération crédits :", err);
-            document.getElementById("credits-value").textContent = "Erreur";
-          });
-        }
-      }, 300);
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const user = await OutsetaAuth.getCurrentUser();
+        const credits = user.person.Credits ?? 0;
+        document.getElementById("credit-count").textContent = credits;
+      } catch (err) {
+        alert("Erreur lors du chargement de vos crédits.");
+        console.error(err);
+      }
     });
   </script>
 </body>
