@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tableau de bord DTF Swiss</title>
+
+  <!-- Authentification Outseta -->
   <script>
     window._o_options = {
       domain: 'dtfswiss.outseta.com',
@@ -11,6 +13,24 @@
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="_o_options"></script>
+
+  <!-- Redirection si pas connecté -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      Outseta.onInitialize(function () {
+        Outseta.getCurrentUser().then(function (user) {
+          if (!user || !user.person) {
+            window.location.href = "https://outils.dtfswiss.ch";
+          } else {
+            // Affiche crédits
+            const credits = user.person.Crédits ?? 0;
+            document.getElementById("credits-count").textContent = credits;
+          }
+        });
+      });
+    });
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,14 +39,16 @@
       margin: 0;
       padding: 0;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
       background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .credits-bubble {
       background-color: #ffffff;
       border: 2px solid #66ffff;
@@ -37,6 +59,7 @@
       display: flex;
       align-items: center;
     }
+
     .buy-btn {
       background-color: #ffffff;
       color: black;
@@ -48,10 +71,12 @@
       margin-left: 10px;
       transition: background-color 0.3s, color 0.3s;
     }
+
     .buy-btn:hover {
       background-color: #66ffff;
       color: white;
     }
+
     .logout-btn {
       background-color: #ff5e5e;
       color: white;
@@ -61,10 +86,12 @@
       font-weight: bold;
       cursor: pointer;
     }
+
     h1 {
       margin-top: 40px;
       font-size: 32px;
     }
+
     .tools-container {
       display: flex;
       justify-content: center;
@@ -72,23 +99,27 @@
       margin-top: 40px;
       flex-wrap: wrap;
     }
+
     .tool {
       width: 337px;
       height: 337px;
       background-color: white;
       border-radius: 20px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
       transition: transform 0.3s;
     }
+
     .tool:hover {
       transform: scale(1.05);
     }
+
     .tool img {
       width: 100%;
       height: auto;
       border-radius: 15px;
     }
+
     .tool-label {
       margin-top: 10px;
       font-weight: bold;
@@ -109,38 +140,25 @@
 
   <div class="tools-container">
     <div class="tool">
-      <a id="btn-supprimer-fond" href="https://dtfswiss.ch/pages/supprimer-le-fond">
+      <a href="https://dtfswiss.ch/pages/supprimer-le-fond">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
       </a>
       <div class="tool-label">Supprimer le fond</div>
     </div>
+
     <div class="tool">
-      <a id="btn-ameliorer-image" href="https://dtfswiss.ch/pages/ameliorer-image">
+      <a href="https://dtfswiss.ch/pages/ameliorer-image">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
       </a>
       <div class="tool-label">Améliorer l'image</div>
     </div>
+
     <div class="tool">
-      <a id="btn-vectoriser" href="https://dtfswiss.ch/pages/vectoriser">
+      <a href="https://dtfswiss.ch/pages/vectoriser">
         <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
       </a>
       <div class="tool-label">Vectoriser</div>
     </div>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      Outseta.onInitialize(function () {
-        Outseta.getCurrentUser().then(function (user) {
-          if (!user || !user.Uid) {
-            window.location.href = "https://outils-dtfswiss.outseta.com/auth?widgetMode=login#o-anonymous";
-          } else {
-            const credits = user.person && user.person.Crédits !== undefined ? user.person.Crédits : "0";
-            document.getElementById("credits-count").textContent = credits;
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>
