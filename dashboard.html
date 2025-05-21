@@ -114,7 +114,7 @@
       Crédits : <span id="credits-count">...</span>
       <button class="buy-btn" onclick="window.location.href='https://dtfswiss.ch/pages/abonnement'">Acheter</button>
     </div>
-    <button class="logout-btn" onclick="OutsetaAuth.logout()">Déconnexion</button>
+    <button class="logout-btn" onclick="Outseta.logout()">Déconnexion</button>
   </div>
 
   <h1>Bienvenue sur les outils DTF Swiss</h1>
@@ -145,13 +145,15 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      OutsetaAuth.user().then(function(user) {
-        const credits = user.person.Credits;
-        document.getElementById("credits-count").textContent = credits !== undefined ? credits : "0";
-      }).catch(function(error) {
-        console.error("Erreur récupération utilisateur :", error);
-        document.getElementById("credits-count").textContent = "Erreur";
-      });
+      Outseta.getCurrentUser()
+        .then(function (user) {
+          const credits = user?.person?.Credits ?? 0;
+          document.getElementById("credits-count").textContent = credits;
+        })
+        .catch(function (error) {
+          console.error("Erreur lors du chargement des crédits :", error);
+          document.getElementById("credits-count").textContent = "Erreur";
+        });
     });
   </script>
 </body>
