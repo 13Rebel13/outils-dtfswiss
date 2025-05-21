@@ -2,42 +2,99 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Tableau de bord</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTF Swiss - Dashboard</title>
+  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
   <script>
-    // Configuration d'Outseta
-    var o_options = {
-      domain: 'votre-sous-domaine.outseta.com', // Remplacez par votre sous-domaine Outseta
-      load: 'auth,nocode,profile',
-      tokenStorage: 'local', // Permet de maintenir la session utilisateur
-      monitorDom: true // Utile si vous utilisez une SPA
-    };
+    window.outseta = window.outseta || {};
+    outseta.orgUid = "rm0j72Y9"; // Ton vrai orgUid, trouvé dans ton compte
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5faff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .header {
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .credits-box {
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: 2px solid #00c4cc;
+      border-radius: 20px;
+    }
+    .tool-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .tool-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 220px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .tool-card:hover {
+      transform: scale(1.05);
+    }
+    .tool-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .tool-card a {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #000;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bienvenue sur votre tableau de bord</h1>
-  <p>Crédits disponibles : <strong id="credit-count">Chargement...</strong></p>
+  <div class="header">
+    <div class="credits-box" id="credits">Crédits : ...</div>
+    <button onclick="outseta.auth.logout()">Déconnexion</button>
+  </div>
+
+  <h1>Bienvenue sur les outils DTF Swiss</h1>
+  <p>Tu es bien connecté.</p>
+
+  <div class="tool-boxes">
+    <div class="tool-card">
+      <img src="tools/bg-removal.png" alt="Supprimer le fond">
+      <a href="/tools/remove.html">Supprimer le fond</a>
+    </div>
+    <div class="tool-card">
+      <img src="tools/upscale.png" alt="Améliorer l'image">
+      <a href="/tools/upscale.html">Améliorer l'image</a>
+    </div>
+    <div class="tool-card">
+      <img src="tools/vector.png" alt="Vectoriser">
+      <a href="/tools/vectorize.html">Vectoriser</a>
+    </div>
+  </div>
 
   <script>
-    // Attendre que le DOM soit prêt
-    document.addEventListener('DOMContentLoaded', function () {
-      // Vérifier si Outseta est chargé
-      if (typeof Outseta === 'undefined') {
-        console.error('Outseta n\'est pas défini. Vérifiez que le script est correctement chargé.');
-        return;
-      }
-
-      // Récupérer les informations de l'utilisateur
-      Outseta.getUser().then(function (user) {
-        if (user && user.CustomProperties && user.CustomProperties.Credits !== undefined) {
-          document.getElementById('credit-count').textContent = user.CustomProperties.Credits;
-        } else {
-          document.getElementById('credit-count').textContent = 'Non disponible';
-          console.warn('Le champ "Credits" n\'est pas défini dans les propriétés personnalisées de l\'utilisateur.');
-        }
-      }).catch(function (error) {
-        console.error('Erreur lors de la récupération des informations utilisateur :', error);
-        document.getElementById('credit-count').textContent = 'Erreur';
+    document.addEventListener("DOMContentLoaded", function () {
+      outseta.auth.user().then(function(user) {
+        const credits = user.person.Credits ?? 0;
+        document.getElementById("credits").textContent = "Crédits : " + credits;
+      }).catch(function (err) {
+        console.error("Erreur récupération des crédits :", err);
+        document.getElementById("credits").textContent = "Crédits : erreur";
       });
     });
   </script>
