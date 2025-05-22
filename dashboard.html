@@ -1,109 +1,115 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>DTF Swiss - Tableau de bord</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✅ Configuration Outseta -->
-  <script>
-    window._outsetaConfig = {
-      domain: "outils-dtfswiss"
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - DTF Swiss</title>  <!-- Outseta embed -->  <script>
+    var o_options = {
+      domain: "outils-dtfswiss.outseta.com",
+      monitorDom: true
     };
-  </script>
-
-  <!-- ✅ Script Outseta -->
-  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
-
-  <!-- ✅ Styles -->
-  <style>
+  </script>  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" defer></script>  <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 50px;
+      background: #f4f7fb;
       margin: 0;
-    }
-
-    .dashboard-container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 0;
       text-align: center;
     }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    .credit-count {
-      font-size: 1.3rem;
-      color: #333;
-      margin-bottom: 30px;
+    .credit-btn {
+      border: 2px solid #00cec9;
+      border-radius: 20px;
+      padding: 10px 20px;
+      background: white;
+      font-weight: bold;
     }
-
-    .tool-link {
-      display: block;
-      margin: 20px auto;
-      max-width: 350px;
+    .credit-btn a {
+      margin-left: 15px;
+      background: #00cec9;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 15px;
+      text-decoration: none;
     }
-
-    .tool-link img {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    .logout-btn {
+      background: #ff7675;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      align-self: center;
+    }
+    h1 { margin-top: 40px; }
+    .tools {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .tool {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 200px;
       transition: transform 0.2s;
     }
-
-    .tool-link img:hover {
-      transform: scale(1.03);
+    .tool:hover {
+      transform: scale(1.05);
     }
-  </style>
-</head>
-
+    .tool img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .tool a {
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      color: #2d3436;
+    }
+  </style></head>
 <body>
-  <div class="dashboard-container">
-    <h1>Bienvenue <span id="userName">...</span> 👋</h1>
-    <div class="credit-count">
-      Crédits disponibles : <span id="creditCount">...</span>
+  <div class="header">
+    <div class="credit-btn">
+      Crédits : <span id="userCredits">…</span>
+      <a href="https://outils-dtfswiss.outseta.com/auth">Acheter</a>
     </div>
+    <a href="/#o-logout-link" class="logout-btn">Déconnexion</a>
+  </div>  <h1>Bienvenue sur les outils DTF Swiss</h1>
+  <p>Tu es bien connecté.</p>  <div class="tools">
+    <div class="tool">
+      <img src="supprimer_le_fond.png" alt="Supprimer le fond">
+      <a href="https://outils.dtfswiss.ch/remove-bg.html">Supprimer le fond</a>
+    </div>
+    <div class="tool">
+      <img src="ameliorer_image.png" alt="Améliorer l'image">
+      <a href="https://outils.dtfswiss.ch/upscale.html">Améliorer l'image</a>
+    </div>
+    <div class="tool">
+      <img src="https://i.imgur.com/baJWw2B.png" alt="Vectoriser">
+      <a href="https://outils.dtfswiss.ch/vectorizer.html">Vectoriser</a>
+    </div>
+  </div>  <script>
+    function updateCredits(profile) {
+      document.getElementById('userCredits').textContent = profile.Credits ?? 0;
+    }
 
-    <a class="tool-link" href="/supprimer-fond.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
-    </a>
-
-    <a class="tool-link" href="/ameliorer-image.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
-    </a>
-
-    <a class="tool-link" href="/vectoriser-image.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image">
-    </a>
-  </div>
-
-  <!-- ✅ Script JS -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof Outseta === "undefined") {
-        alert("Erreur : Outseta n'est pas chargé !");
-        return;
-      }
-
-      Outseta.onReady(function () {
-        const user = Outseta.getCurrentUser();
-
-        if (user) {
-          document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-          document.getElementById("creditCount").innerText = user.credits ?? "0";
-        } else {
-          alert("Utilisateur non identifié !");
-        }
-      });
+    Outseta.on('accessToken.set', () => {
+      Outseta.getUser()
+        .then(updateCredits)
+        .catch(() => {
+          document.getElementById('userCredits').textContent = 'Erreur';
+        });
     });
-  </script>
-</body>
+  </script></body>
 </html>
