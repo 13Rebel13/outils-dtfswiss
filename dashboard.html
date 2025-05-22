@@ -5,8 +5,17 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ✅ Configuration Outseta -->
+  <script>
+    window._outsetaConfig = {
+      domain: "outils-dtfswiss"
+    };
+  </script>
+
+  <!-- ✅ Script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
+  <!-- ✅ Styles -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,38 +31,43 @@
       border-radius: 12px;
       padding: 40px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
     h1 {
       font-size: 2rem;
+      margin-bottom: 10px;
     }
 
     .credit-count {
-      margin: 20px 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #333;
+      margin-bottom: 30px;
     }
 
     .tool-link {
       display: block;
-      margin: 30px 0;
-      text-decoration: none;
-      color: #007bff;
+      margin: 20px auto;
+      max-width: 350px;
     }
 
     .tool-link img {
       width: 100%;
-      max-width: 350px;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 12px;
       display: block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .tool-link img:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
 
 <body>
   <div class="dashboard-container">
-    <h1>Bienvenue <span id="userName">...</span></h1>
+    <h1>Bienvenue <span id="userName">...</span> 👋</h1>
     <div class="credit-count">
       Crédits disponibles : <span id="creditCount">...</span>
     </div>
@@ -71,6 +85,7 @@
     </a>
   </div>
 
+  <!-- ✅ Script JS -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (typeof Outseta === "undefined") {
@@ -78,17 +93,14 @@
         return;
       }
 
-      Outseta.init({
-        domain: "outils-dtfswiss"
-      });
-
       Outseta.onReady(function () {
         const user = Outseta.getCurrentUser();
+
         if (user) {
           document.getElementById("userName").innerText = user.firstName || "Utilisateur";
           document.getElementById("creditCount").innerText = user.credits ?? "0";
         } else {
-          console.warn("Utilisateur non trouvé.");
+          alert("Utilisateur non identifié !");
         }
       });
     });
