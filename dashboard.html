@@ -5,7 +5,6 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Chargement du script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
@@ -44,9 +43,10 @@
 
     .tool-link img {
       width: 100%;
-      max-width: 300px;
+      max-width: 350px;
       border-radius: 10px;
       margin-bottom: 10px;
+      display: block;
     }
   </style>
 </head>
@@ -59,18 +59,15 @@
     </div>
 
     <a class="tool-link" href="/supprimer-fond.html">
-      <img src="/supprimer_le_fond.png" alt="Supprimer le fond">
-      Supprimer le fond d'une image
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
     </a>
 
     <a class="tool-link" href="/ameliorer-image.html">
-      <img src="/ameliorer_image.png" alt="Améliorer l'image">
-      Améliorer une image
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
     </a>
 
     <a class="tool-link" href="/vectoriser-image.html">
-      <img src="/vectoriser_image.png" alt="Vectoriser l'image">
-      Vectoriser une image
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image">
     </a>
   </div>
 
@@ -81,7 +78,6 @@
         return;
       }
 
-      // 🔑 Initialisation Outseta avec ton domaine
       Outseta.init({
         domain: "outils-dtfswiss"
       });
