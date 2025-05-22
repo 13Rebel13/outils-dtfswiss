@@ -5,42 +5,44 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Script Outseta -->
+  <!-- Chargement du script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
-  <!-- Styles de base -->
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 40px;
+      background: #f4f4f4;
+      padding: 50px;
       margin: 0;
     }
+
     .dashboard-container {
       max-width: 800px;
       margin: auto;
       background: white;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 40px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
+
     h1 {
       font-size: 2rem;
-      margin-bottom: 20px;
     }
+
     .credit-count {
+      margin: 20px 0;
       font-size: 1.2rem;
-      margin-bottom: 30px;
       color: #333;
     }
+
     .tool-link {
       display: block;
-      margin-bottom: 15px;
-      font-size: 1.1rem;
+      margin: 30px 0;
       text-decoration: none;
       color: #007bff;
     }
-    .tool-image {
+
+    .tool-link img {
       width: 100%;
       max-width: 300px;
       border-radius: 10px;
@@ -48,34 +50,41 @@
     }
   </style>
 </head>
+
 <body>
   <div class="dashboard-container">
     <h1>Bienvenue <span id="userName">...</span></h1>
-    <p class="credit-count">Crédits disponibles : <span id="creditCount">...</span></p>
+    <div class="credit-count">
+      Crédits disponibles : <span id="creditCount">...</span>
+    </div>
 
     <a class="tool-link" href="/supprimer-fond.html">
-      <img class="tool-image" src="/images/supprimer_le_fond.png" alt="Supprimer le fond">
+      <img src="/supprimer_le_fond.png" alt="Supprimer le fond">
       Supprimer le fond d'une image
     </a>
 
     <a class="tool-link" href="/ameliorer-image.html">
-      <img class="tool-image" src="/images/ameliorer_image.png" alt="Améliorer une image">
+      <img src="/ameliorer_image.png" alt="Améliorer l'image">
       Améliorer une image
     </a>
 
     <a class="tool-link" href="/vectoriser-image.html">
-      <img class="tool-image" src="/images/vectoriser_image.png" alt="Vectoriser une image">
+      <img src="/vectoriser_image.png" alt="Vectoriser l'image">
       Vectoriser une image
     </a>
   </div>
 
-  <!-- Initialisation Outseta -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (typeof Outseta === "undefined") {
-        console.error("Outseta n'est pas chargé !");
+        alert("Erreur : Outseta n'est pas chargé !");
         return;
       }
+
+      // 🔑 Initialisation Outseta avec ton domaine
+      Outseta.init({
+        domain: "outils-dtfswiss"
+      });
 
       Outseta.onReady(function () {
         const user = Outseta.getCurrentUser();
