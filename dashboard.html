@@ -5,7 +5,7 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ Configuration obligatoire AVANT le script -->
+  <!-- ✅ Configuration Outseta AVANT chargement du script -->
   <script>
     window._outsetaConfig = {
       domain: "outils-dtfswiss"
@@ -15,6 +15,7 @@
   <!-- ✅ Script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
+  <!-- ✅ Styles -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -47,8 +48,7 @@
       display: block;
       margin: 30px auto;
       text-decoration: none;
-      color: #007bff;
-      max-width: 300px;
+      max-width: 350px;
     }
 
     .tool-link img {
@@ -73,21 +73,21 @@
     </div>
 
     <a class="tool-link" href="/supprimer-fond.html">
-      <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Supprimer le fond">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
     </a>
 
     <a class="tool-link" href="/ameliorer-image.html">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Améliorer l'image">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
     </a>
 
     <a class="tool-link" href="/vectoriser-image.html">
-      <img src="https://cdn-icons-png.flaticon.com/512/10112/10112382.png" alt="Vectoriser l'image">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image">
     </a>
   </div>
 
+  <!-- ✅ Script dynamique -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Ne pas appeler Outseta.init() manuellement ici
       const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
 
@@ -95,9 +95,13 @@
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
+
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-            document.getElementById("creditCount").innerText = user.credits ?? "0";
+
+            // ✅ Utilisation du bon nom de champ : "Credits" avec majuscule
+            const credits = user.Credits;
+            document.getElementById("creditCount").innerText = credits ?? "0";
           } else {
             alert("Utilisateur non identifié !");
           }
