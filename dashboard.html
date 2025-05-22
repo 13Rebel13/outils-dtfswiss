@@ -8,19 +8,24 @@
   <!-- ✂️ 1. Patch anti‑double‑URL  ------------------------------------ -->
   <script>
     /*
-      Si l’URL ressemble à :
-        https://ton-site.ch/https://ton-site.ch/dashboard.html
-      on extrait la partie après le premier slash et on redirige proprement.
-      (arrive quand le Post‑login URL d’Outseta commence par « https:// » et
-       qu’Outseta l’affiche en tant que chemin.)
+      Patch anti « domaine en double »
+      --------------------------------
+      Quand Outseta reçoit une URL de redirection ABSOLUE (commençant par
+      https://) elle est parfois recollée après le domaine, produisant :
+        https://outils.dtfswiss.ch/https://outils.dtfswiss.ch/dashboard.html
+      On détecte ce schéma et on redirige vers la bonne URL locale.
+      (❗️ Mieux vaut toutefois mettre une URL **relative** dans Outseta,
+       ex.  /dashboard.html  au lieu de https://outils.dtfswiss.ch/dashboard.html)
     */
-    (function () {
-      const m = location.pathname.match(/^\/https?:\/\/.+/);
-      if (m) {
-        // on supprime le premier “/” pour obtenir l’URL souhaitée
-        const clean = location.pathname.slice(1) + location.search + location.hash;
-        location.replace(clean);
-      }
+    (function(){
+      const dup = location.pathname.match(/^\/https?:\/\//);
+      if(!dup) return;
+      try {
+        const url = new URL(location.pathname.slice(1)); // on retire le premier « / »
+        // ex. URL → origin:"https://outils.dtfswiss.ch"  pathname:"/dashboard.html"
+        const cleanPath = url.pathname + url.search + url.hash || "/";
+        location.replace(cleanPath);
+      } catch(e){ /* si jamais URL() échoue, on laisse tomber */ }
     })();
   </script>
   <!-- ---------------------------------------------------------------- -->
