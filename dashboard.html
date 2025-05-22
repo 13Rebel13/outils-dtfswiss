@@ -5,6 +5,14 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ✅ Configuration obligatoire AVANT le script -->
+  <script>
+    window._outsetaConfig = {
+      domain: "outils-dtfswiss"
+    };
+  </script>
+
+  <!-- ✅ Script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
@@ -22,6 +30,7 @@
       border-radius: 12px;
       padding: 40px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
     h1 {
@@ -30,69 +39,70 @@
 
     .credit-count {
       margin: 20px 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #333;
     }
 
     .tool-link {
       display: block;
-      margin: 30px 0;
+      margin: 30px auto;
       text-decoration: none;
       color: #007bff;
+      max-width: 300px;
     }
 
     .tool-link img {
       width: 100%;
-      max-width: 300px;
       border-radius: 10px;
       margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .tool-link img:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
 
 <body>
   <div class="dashboard-container">
-    <h1>Bienvenue <span id="userName">...</span></h1>
+    <h1>Bienvenue <span id="userName">...</span> 👋</h1>
     <div class="credit-count">
       Crédits disponibles : <span id="creditCount">...</span>
     </div>
 
     <a class="tool-link" href="/supprimer-fond.html">
       <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="Supprimer le fond">
-      Supprimer le fond d'une image
     </a>
 
     <a class="tool-link" href="/ameliorer-image.html">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Améliorer l'image">
-      Améliorer une image
     </a>
 
     <a class="tool-link" href="/vectoriser-image.html">
       <img src="https://cdn-icons-png.flaticon.com/512/10112/10112382.png" alt="Vectoriser l'image">
-      Vectoriser une image
     </a>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      if (typeof Outseta === "undefined") {
-        alert("Erreur : Outseta n'est pas chargé !");
-        return;
-      }
+      // Ne pas appeler Outseta.init() manuellement ici
+      const checkOutsetaLoaded = setInterval(() => {
+        if (typeof Outseta === "undefined") return;
 
-      Outseta.init({
-        domain: "outils-dtfswiss"
-      });
+        clearInterval(checkOutsetaLoaded);
 
-      Outseta.onReady(function () {
-        const user = Outseta.getCurrentUser();
-        if (user) {
-          document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-          document.getElementById("creditCount").innerText = user.credits ?? "0";
-        } else {
-          console.warn("Utilisateur non trouvé.");
-        }
-      });
+        Outseta.onReady(function () {
+          const user = Outseta.getCurrentUser();
+          if (user) {
+            document.getElementById("userName").innerText = user.firstName || "Utilisateur";
+            document.getElementById("creditCount").innerText = user.credits ?? "0";
+          } else {
+            alert("Utilisateur non identifié !");
+          }
+        });
+      }, 100);
     });
   </script>
 </body>
