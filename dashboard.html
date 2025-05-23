@@ -5,32 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Patch anti //https:// au cas où -->
+  <!-- ✅ Patch anti URL doublée -->
   <script>
     (function () {
-      const m = location.pathname.match(/\/\/https?:\/\/\//);
-      if (m) {
+      const path = window.location.pathname;
+      if (path.startsWith("/https:/") || path.startsWith("/http:/")) {
         try {
-          const u = new URL(location.pathname.slice(1));
-          location.replace(u.pathname + u.search + u.hash || "/");
-        } catch (e) {}
+          const u = new URL(path.slice(1));
+          window.location.replace(u.pathname + u.search + u.hash || "/");
+        } catch (e) {
+          console.warn("Échec de redirection URL propre :", e);
+        }
       }
     })();
   </script>
 
-  <!-- ✅ Configuration Outseta -->
+  <!-- ✅ Configuration classique d’Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss", // NE PAS mettre .outseta.com ni https://
+      domain: "outils-dtfswiss",
       load: "auth,nocode,profile",
       monitorDom: true
     };
   </script>
 
-  <!-- ✅ Chargement du SDK (fichier JS utilisé par Outseta) -->
+  <!-- ✅ SDK Outseta (chargé proprement avec defer) -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
-  <!-- ✅ Style de la page -->
+  <!-- ✅ Styles -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -45,7 +47,7 @@
       background: white;
       border-radius: 12px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       text-align: center;
     }
 
@@ -70,7 +72,7 @@
       width: 100%;
       border-radius: 10px;
       margin-bottom: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
       transition: transform 0.2s;
     }
 
@@ -100,7 +102,7 @@
     </a>
   </div>
 
-  <!-- ✅ Script dynamique Outseta -->
+  <!-- ✅ Script dynamique pour afficher le prénom et les crédits -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
@@ -112,12 +114,8 @@
           const user = Outseta.getCurrentUser();
 
           if (user) {
-            // Nom de l'utilisateur
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-
-            // Champs personnalisés (vérifie la majuscule !)
-            const credits = user.Credits;
-            document.getElementById("creditCount").innerText = credits ?? "0";
+            document.getElementById("creditCount").innerText = user.Credits ?? "0";
           } else {
             alert("Utilisateur non identifié !");
           }
