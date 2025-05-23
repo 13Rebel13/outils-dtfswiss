@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>DTF Swiss – Tableau de bord</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DTF Swiss – Tableau de bord</title>
 
-  <!-- ◾ Patch anti “/https://…” — redirige vers l’URL propre si besoin -->
+  <!-- Patch facultatif : corrige /https://… si quelqu’un l’a encore en cache -->
   <script>
-    (function () {
-      const bad = location.pathname.match(/^\/https?:\/\//);
+    (function(){
+      const bad = location.pathname.match(/^\\/https?:\\/\\//);
       if (bad) {
         try {
-          const fixed = new URL(location.pathname.slice(1));          // retire le 1er “/”
-          location.replace(fixed.pathname + fixed.search + fixed.hash || "/");
-        } catch (_) { /* on ignore si l’URL est étrange */ }
+          const u = new URL(location.pathname.slice(1));
+          location.replace(u.pathname + u.search + u.hash || "/");
+        } catch(e){}
       }
     })();
   </script>
 
-  <!-- ◾ Configuration Outseta (Quick-start) -->
+  <!-- Configuration Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss.outseta.com",   // ← IMPORTANT : domaine complet
-      load:   "auth,nocode,profile"            // modules nécessaires
+      domain: "outils-dtfswiss.outseta.com",
+      load  : "auth,nocode,profile",
+      monitorDom: true               // met à jour data-o-member automatiquement
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
-  <!-- ◾ Styles minimalistes -->
   <style>
     body{font-family:Arial,Helvetica,sans-serif;background:#f4f4f4;margin:0;padding:50px}
-    .dashboard{max-width:800px;margin:auto;background:#fff;border-radius:12px;padding:40px;
-               box-shadow:0 0 15px rgba(0,0,0,.1);text-align:center}
-    h1{font-size:2rem;margin:0 0 10px}
+    .dash{max-width:800px;margin:auto;background:#fff;border-radius:12px;padding:40px;
+          box-shadow:0 0 15px rgba(0,0,0,.1);text-align:center}
+    h1{margin:0 0 10px;font-size:2rem}
     .credits{margin:20px 0;font-size:1.3rem;color:#333}
     .tool{display:block;margin:30px auto;max-width:350px;text-decoration:none}
     .tool img{width:100%;border-radius:10px;margin-bottom:10px;
@@ -40,13 +40,10 @@
     .tool img:hover{transform:scale(1.03)}
   </style>
 </head>
-
 <body>
-  <div class="dashboard">
+  <div class="dash">
     <h1>Bienvenue <span id="userName">…</span> 👋</h1>
-    <div class="credits">
-      Crédits disponibles : <span id="creditCount" data-o-member="Credits">…</span>
-    </div>
+    <div class="credits">Crédits disponibles : <span id="creditCount" data-o-member="Credits">…</span></div>
 
     <a class="tool" href="/supprimer-fond.html">
       <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910"
@@ -55,24 +52,24 @@
 
     <a class="tool" href="/ameliorer-image.html">
       <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910"
-           alt="Améliorer l'image">
+           alt="Améliorer l’image">
     </a>
 
     <a class="tool" href="/vectoriser-image.html">
       <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910"
-           alt="Vectoriser l'image">
+           alt="Vectoriser l’image">
     </a>
   </div>
 
-  <!-- ◾ Script dynamique : prénom + secours pour les crédits -->
+  <!-- Récupère prénom + crédits (secours si data-o-member n’est pas prêt) -->
   <script>
     Outseta.on('accessToken.set', () => {
       Outseta.getUser()
         .then(u => {
-          document.getElementById('userName').textContent  = u.firstName || 'Utilisateur';
+          document.getElementById('userName').textContent     = u.firstName || 'Utilisateur';
           document.getElementById('creditCount').textContent = u.Credits ?? 0;
         })
-        .catch(() => alert("Impossible de récupérer le profil Outseta."));
+        .catch(() => console.error('Outseta.getUser() a échoué'));
     });
   </script>
 </body>
