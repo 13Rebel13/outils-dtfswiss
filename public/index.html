@@ -1,22 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Connexion aux outils DTF Swiss</title>
+  <meta charset="utf-8">
+  <title>DTF Swiss – Connexion</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Configuration Outseta -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
-      load: 'auth'
+      load: 'auth,nocode,profile'
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background: #fff;
+      padding: 40px 60px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .1);
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h1 style="text-align:center;">Connexion aux outils DTF Swiss</h1>
+  <div class="card">
+    <h1>Bienvenue sur les outils DTF Swiss</h1>
 
-  <div data-o-auth="1"
-       data-widget-mode="login"
-       data-mode="embed">
+    <!-- Widget de connexion Outseta -->
+    <div data-o-auth="1" data-widget-mode="login" data-mode="embed"></div>
   </div>
 </body>
 </html>
