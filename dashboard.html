@@ -2,70 +2,59 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Tableau de bord - DTF Swiss</title>
+  <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ Configuration obligatoire pour Outseta -->
+  <!-- Configuration Outseta -->
   <script>
-    window._outsetaConfig = {
-      domain: "outils-dtfswiss" // ⚠️ sans .com
+    var o_options = {
+      domain: 'outils-dtfswiss.outseta.com',
+      load: 'auth,nocode,profile'
     };
   </script>
-
-  <!-- ✅ Script Outseta -->
-  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
-      padding: 50px;
       margin: 0;
+      padding: 50px;
     }
-
     .dashboard-container {
       max-width: 800px;
       margin: auto;
       background: white;
       border-radius: 12px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
-
     h1 {
       font-size: 2rem;
-      margin-bottom: 10px;
     }
-
     .credit-count {
       font-size: 1.2rem;
-      color: #333;
-      margin-bottom: 40px;
+      margin: 20px 0 40px;
     }
-
     .tool-link {
       display: block;
       margin: 30px auto;
-      text-decoration: none;
       max-width: 350px;
     }
-
     .tool-link img {
       width: 100%;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s;
     }
-
     .tool-link img:hover {
       transform: scale(1.03);
     }
   </style>
 </head>
-
 <body>
-  <div class="dashboard-container" id="dashboard" style="display: none;">
+  <div class="dashboard-container" id="dashboard" style="display:none;">
     <h1>Bienvenue <span id="userName">...</span> 👋</h1>
     <div class="credit-count">
       Crédits disponibles : <span id="creditCount">...</span>
@@ -86,27 +75,20 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const checkOutsetaLoaded = setInterval(() => {
+      const interval = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-        clearInterval(checkOutsetaLoaded);
 
-        // Vérifie que l'utilisateur est bien chargé
+        clearInterval(interval);
+
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
-
           if (!user || !user.firstName) {
-            window.location.href = "/login.html"; // 🔐 redirection si non connecté
+            window.location.href = "/index.html"; // non connecté
             return;
           }
 
-          // ✅ Affichage prénom
           document.getElementById("userName").innerText = user.firstName;
-
-          // ✅ Affichage crédits (majuscule comme dans Outseta)
-          const credits = user.Credits ?? 0;
-          document.getElementById("creditCount").innerText = credits;
-
-          // ✅ Affiche le dashboard
+          document.getElementById("creditCount").innerText = user.Credits ?? 0;
           document.getElementById("dashboard").style.display = "block";
         });
       }, 100);
