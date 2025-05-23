@@ -2,17 +2,17 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>DTF Swiss - Tableau de bord</title>
+  <title>Tableau de bord - DTF Swiss</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ 1. Configuration AVANT le script CDN -->
+  <!-- ✅ Configuration obligatoire pour Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss" // ⚠️ ne pas mettre .com
+      domain: "outils-dtfswiss" // ⚠️ sans .com
     };
   </script>
 
-  <!-- ✅ 2. Script Outseta -->
+  <!-- ✅ Script Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
@@ -35,12 +35,13 @@
 
     h1 {
       font-size: 2rem;
+      margin-bottom: 10px;
     }
 
     .credit-count {
-      margin: 20px 0;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: #333;
+      margin-bottom: 40px;
     }
 
     .tool-link {
@@ -52,8 +53,7 @@
 
     .tool-link img {
       width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
       transition: transform 0.2s;
     }
@@ -65,7 +65,7 @@
 </head>
 
 <body>
-  <div class="dashboard-container">
+  <div class="dashboard-container" id="dashboard" style="display: none;">
     <h1>Bienvenue <span id="userName">...</span> 👋</h1>
     <div class="credit-count">
       Crédits disponibles : <span id="creditCount">...</span>
@@ -88,18 +88,26 @@
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-
         clearInterval(checkOutsetaLoaded);
 
+        // Vérifie que l'utilisateur est bien chargé
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
 
-          if (user) {
-            document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-            document.getElementById("creditCount").innerText = user.Credits ?? "0"; // ⚠️ "Credits" avec majuscule
-          } else {
-            alert("Utilisateur non identifié !");
+          if (!user || !user.firstName) {
+            window.location.href = "/login.html"; // 🔐 redirection si non connecté
+            return;
           }
+
+          // ✅ Affichage prénom
+          document.getElementById("userName").innerText = user.firstName;
+
+          // ✅ Affichage crédits (majuscule comme dans Outseta)
+          const credits = user.Credits ?? 0;
+          document.getElementById("creditCount").innerText = credits;
+
+          // ✅ Affiche le dashboard
+          document.getElementById("dashboard").style.display = "block";
         });
       }, 100);
     });
