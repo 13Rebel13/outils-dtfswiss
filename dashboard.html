@@ -5,14 +5,14 @@
   <title>DTF Swiss - Tableau de bord</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ Configuration Outseta AVANT chargement du script -->
+  <!-- ✅ DOIT ÊTRE ABSOLUMENT AVANT le script CDN -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss"
+      domain: "outils-dtfswiss" // sans .com
     };
   </script>
 
-  <!-- ✅ Script Outseta -->
+  <!-- ✅ Ensuite seulement on charge le script -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
@@ -96,10 +96,7 @@
 
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-
-            // ⚠️ Utilise bien "Credits" avec C majuscule
-            const credits = user.Credits;
-            document.getElementById("creditCount").innerText = credits ?? "0";
+            document.getElementById("creditCount").innerText = user.Credits ?? "0"; // C majuscule comme dans Outseta
           } else {
             alert("Utilisateur non identifié !");
           }
