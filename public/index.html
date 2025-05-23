@@ -2,39 +2,24 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>DTF Swiss – Connexion</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DTF Swiss – Accueil</title>
 
-  <!-- Configuration Outseta -->
+  <!-- Configuration Outseta : AVANT le SDK -->
   <script>
-    var o_options = {
-      domain: 'outils-dtfswiss.outseta.com',
-      load: 'auth,nocode,profile'
+    window._outsetaConfig = {
+      domain: "outils-dtfswiss.outseta.com",
+      load  : "auth,nocode,profile"   /* nocode = permet getUser plus tard */
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .card {
-      background: #fff;
-      padding: 40px 60px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, .1);
-      text-align: center;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-    }
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;
+         display:flex;align-items:center;justify-content:center;height:100vh;background:#f4f4f4}
+    .card{background:#fff;padding:40px 60px;border-radius:12px;
+          box-shadow:0 4px 15px rgba(0,0,0,.1);text-align:center}
+    h1{margin:0 0 30px;font-size:2rem}
   </style>
 </head>
 <body>
@@ -42,7 +27,10 @@
     <h1>Bienvenue sur les outils DTF Swiss</h1>
 
     <!-- Widget de connexion Outseta -->
-    <div data-o-auth="1" data-widget-mode="login" data-mode="embed"></div>
+    <div data-o-auth="1"
+         data-widget-mode="login"
+         data-mode="embed">
+    </div>
   </div>
 </body>
 </html>
