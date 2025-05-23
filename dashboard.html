@@ -5,28 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Patch anti //https:// redirection bug -->
+  <!-- ✅ Patch anti /https://... doublé -->
   <script>
     (function () {
-      const m = location.pathname.match(/\/\/https?:\/\/\//);
-      if (m) {
+      const path = window.location.pathname;
+      if (path.startsWith('/https:/') || path.startsWith('/http:/')) {
         try {
-          const u = new URL(location.pathname.slice(1));
-          location.replace(u.pathname + u.search + u.hash || "/");
-        } catch (e) {}
+          const u = new URL(path.slice(1));
+          window.location.replace(u.pathname + u.search + u.hash || "/");
+        } catch (e) {
+          console.warn("Redirection échouée :", e);
+        }
       }
     })();
   </script>
 
-  <!-- ✅ Configuration SDK avec o_options -->
+  <!-- ✅ Configuration Outseta avec o_options -->
   <script>
     var o_options = {
-      domain: 'outils-dtfswiss.outseta.com', // OK : domaine complet
+      domain: 'outils-dtfswiss.outseta.com',
       load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     };
   </script>
 
-  <!-- ✅ Chargement du SDK Outseta -->
+  <!-- ✅ Chargement SDK Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <!-- ✅ Styles -->
@@ -99,7 +101,7 @@
     </a>
   </div>
 
-  <!-- ✅ Script pour afficher le prénom et les crédits -->
+  <!-- ✅ Script dynamique Outseta -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
