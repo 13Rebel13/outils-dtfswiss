@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Patch anti URL /https:/https:/ -->
+  <!-- ✅ Patch anti //https:// au cas où -->
   <script>
     (function () {
-      const m = location.pathname.match(/^\/https?:\/\//);
+      const m = location.pathname.match(/\/\/https?:\/\/\//);
       if (m) {
         try {
           const u = new URL(location.pathname.slice(1));
@@ -21,14 +21,16 @@
   <!-- ✅ Configuration Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss.outseta.com",
+      domain: "outils-dtfswiss", // NE PAS mettre .outseta.com ni https://
       load: "auth,nocode,profile",
       monitorDom: true
     };
   </script>
+
+  <!-- ✅ Chargement du SDK (fichier JS utilisé par Outseta) -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
-  <!-- ✅ Styles -->
+  <!-- ✅ Style de la page -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,7 +45,7 @@
       background: white;
       border-radius: 12px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
 
@@ -68,7 +70,7 @@
       width: 100%;
       border-radius: 10px;
       margin-bottom: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s;
     }
 
@@ -98,11 +100,11 @@
     </a>
   </div>
 
-  <!-- ✅ Script final pour afficher prénom et crédits -->
+  <!-- ✅ Script dynamique Outseta -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
-        if (typeof Outseta === "undefined" || typeof Outseta.getCurrentUser !== "function") return;
+        if (typeof Outseta === "undefined") return;
 
         clearInterval(checkOutsetaLoaded);
 
@@ -110,8 +112,12 @@
           const user = Outseta.getCurrentUser();
 
           if (user) {
+            // Nom de l'utilisateur
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-            document.getElementById("creditCount").innerText = user.Credits ?? "0";
+
+            // Champs personnalisés (vérifie la majuscule !)
+            const credits = user.Credits;
+            document.getElementById("creditCount").innerText = credits ?? "0";
           } else {
             alert("Utilisateur non identifié !");
           }
