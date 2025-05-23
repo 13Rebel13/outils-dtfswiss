@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>DTF Swiss – Tableau de bord</title>
 
-  <!-- Patch facultatif : corrige /https://… si quelqu’un l’a encore en cache -->
+  <!-- Patch anti /https://… (utile si quelqu’un a l’ancienne URL en cache) -->
   <script>
     (function(){
-      const bad = location.pathname.match(/^\\/https?:\\/\\//);
-      if (bad) {
-        try {
+      const m = location.pathname.match(/^\\/https?:\\/\\//);
+      if (m){
+        try{
           const u = new URL(location.pathname.slice(1));
           location.replace(u.pathname + u.search + u.hash || "/");
-        } catch(e){}
+        }catch(e){}
       }
     })();
   </script>
@@ -23,7 +23,7 @@
     window._outsetaConfig = {
       domain: "outils-dtfswiss.outseta.com",
       load  : "auth,nocode,profile",
-      monitorDom: true               // met à jour data-o-member automatiquement
+      monitorDom: true                /* met à jour data-o-member automatiquement */
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
@@ -43,7 +43,9 @@
 <body>
   <div class="dash">
     <h1>Bienvenue <span id="userName">…</span> 👋</h1>
-    <div class="credits">Crédits disponibles : <span id="creditCount" data-o-member="Credits">…</span></div>
+    <div class="credits">
+      Crédits disponibles : <span id="creditCount" data-o-member="Credits">…</span>
+    </div>
 
     <a class="tool" href="/supprimer-fond.html">
       <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910"
@@ -61,7 +63,7 @@
     </a>
   </div>
 
-  <!-- Récupère prénom + crédits (secours si data-o-member n’est pas prêt) -->
+  <!-- Mise à jour prénom + crédits -->
   <script>
     Outseta.on('accessToken.set', () => {
       Outseta.getUser()
