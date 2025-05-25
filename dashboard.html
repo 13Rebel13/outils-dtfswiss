@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - DTF Swiss</title>
 
-  <!-- Configuration Outseta recommandée -->
+  <!-- Configuration Outseta officielle -->
   <script>
     var o_options = {
       domain: "outils-dtfswiss.outseta.com",
@@ -29,7 +29,7 @@
       align-items: center;
       padding: 20px;
       background: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .credit-btn {
@@ -75,7 +75,7 @@
       background: white;
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 240px;
       transition: transform 0.2s;
     }
@@ -132,20 +132,21 @@
 
       const check = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-
         clearInterval(check);
 
-        Outseta.getCurrentUser().then(user => {
-          if (!user || !user.person) {
-            window.location.href = "/index.html";
-            return;
-          }
+        Outseta.getCurrentUser()
+          .then(user => {
+            if (!user || !user.person) {
+              window.location.href = "/index.html";
+              return;
+            }
 
-          el.textContent = user.person.Credits ?? 0;
-        }).catch(err => {
-          console.error("Erreur Outseta :", err);
-          el.textContent = "Erreur";
-        });
+            el.textContent = user.person.Credits ?? 0;
+          })
+          .catch(err => {
+            console.error("Erreur Outseta :", err);
+            el.textContent = "Erreur";
+          });
       }, 100);
     });
   </script>
