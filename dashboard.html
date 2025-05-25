@@ -16,11 +16,11 @@
 
   <!-- ✅ Patch anti //https:// doublé dans l’URL -->
   <script>
-    if (location.pathname.startsWith("/https:/")) {
-      const fixedPath = location.pathname.replace(/^\/https:\/\//, "/");
-      window.location.replace(fixedPath + location.search + location.hash);
-    }
-  </script>
+  if (window.location.pathname.includes("/https://outils.dtfswiss.ch/")) {
+    const cleaned = window.location.pathname.replace("/https://outils.dtfswiss.ch/", "/");
+    window.location.replace(cleaned + window.location.search + window.location.hash);
+  }
+</script>
 
   <style>
     body {
