@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - DTF Swiss</title>
 
-  <!-- Script Outseta -->
+  <!-- Outseta configuration -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
@@ -17,7 +17,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f4f7fb;
       margin: 0;
       padding: 0;
       text-align: center;
@@ -30,12 +30,11 @@
       background: white;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .header span {
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    .logout-link {
+    .header .links a {
       margin-left: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
     }
     h1 {
       margin-top: 40px;
@@ -72,63 +71,32 @@
   </style>
 </head>
 <body>
+
   <div class="header">
     <div>
-      <span>Bienvenue <span id="userName">...</span> 👋</span><br>
-      Crédits disponibles : <span id="userCredits">...</span>
+      <h2>Bienvenue <span data-o-member="FirstName">...</span> 👋</h2>
+      <p>Crédits disponibles : <span data-o-member="Credits">...</span></p>
     </div>
-    <div>
-      <a href="https://outils-dtfswiss.outseta.com/profile#o-authenticated" target="_blank">Mon profil</a> |
-      <a href="#o-logout-link" class="logout-link">Déconnexion</a>
+    <div class="links">
+      <a href="https://outils-dtfswiss.outseta.com/profile#o-authenticated">Mon profil</a>
+      <a href="#o-logout-link">Déconnexion</a>
     </div>
   </div>
 
   <div class="tools">
     <div class="tool">
-      <a href="remove-bg.html">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
-        Supprimer le fond
-      </a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
+      <a href="https://outils.dtfswiss.ch/remove-bg.html">Supprimer le fond</a>
     </div>
     <div class="tool">
-      <a href="upscale.html">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
-        Améliorer l'image
-      </a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
+      <a href="https://outils.dtfswiss.ch/upscale.html">Améliorer l'image</a>
     </div>
     <div class="tool">
-      <a href="vectorizer.html">
-        <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser" />
-        Vectoriser
-      </a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
+      <a href="https://outils.dtfswiss.ch/vectorizer.html">Vectoriser</a>
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      function waitForOutseta(callback) {
-        const interval = setInterval(function () {
-          if (window.Outseta && Outseta.getCurrentUser) {
-            clearInterval(interval);
-            callback();
-          }
-        }, 100);
-      }
-
-      waitForOutseta(() => {
-        Outseta.getCurrentUser().then(user => {
-          const name = user.person?.firstName || "Utilisateur";
-          const credits = user.person?.Credits ?? "0";
-
-          document.getElementById("userName").textContent = name;
-          document.getElementById("userCredits").textContent = credits;
-        }).catch(err => {
-          console.error("Erreur récupération user :", err);
-          document.getElementById("userName").textContent = "Erreur";
-          document.getElementById("userCredits").textContent = "Erreur";
-        });
-      });
-    });
-  </script>
 </body>
 </html>
