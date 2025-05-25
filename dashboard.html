@@ -6,15 +6,13 @@
   <title>DTF Swiss - Tableau de bord</title>
 
   <!-- ✅ Script Outseta recommandé -->
-<script>
-var o_options = {
-    domain: 'outils-dtfswiss.outseta.com',
-    load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
-};
-</script>
-<script src="https://cdn.outseta.com/outseta.min.js"
-        data-options="o_options">
-</script>
+  <script>
+    var o_options = {
+      domain: 'outils-dtfswiss.outseta.com',
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
+    };
+  </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
   <!-- ✅ Style -->
   <style>
@@ -24,6 +22,7 @@ var o_options = {
       padding: 50px;
       margin: 0;
     }
+
     .dashboard-container {
       max-width: 800px;
       margin: auto;
@@ -33,20 +32,24 @@ var o_options = {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
+
     h1 {
       font-size: 2rem;
     }
+
     .credit-count {
       margin: 20px 0;
       font-size: 1.3rem;
       color: #333;
     }
+
     .tool-link {
       display: block;
       margin: 30px auto;
       text-decoration: none;
       max-width: 350px;
     }
+
     .tool-link img {
       width: 100%;
       border-radius: 10px;
@@ -54,6 +57,7 @@ var o_options = {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s;
     }
+
     .tool-link img:hover {
       transform: scale(1.03);
     }
@@ -80,15 +84,17 @@ var o_options = {
     </a>
   </div>
 
-  <!-- ✅ Script pour récupérer l'utilisateur et afficher les crédits -->
+  <!-- ✅ Script utilisateur connecté -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const waitForOutseta = setInterval(() => {
+      const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-        clearInterval(waitForOutseta);
+
+        clearInterval(checkOutsetaLoaded);
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
+
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
             const credits = user.Credits;
