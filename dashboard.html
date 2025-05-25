@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard – DTF Swiss</title>
 
-  <!-- ✅ Script Outseta correctement initialisé -->
+  <!-- Outseta script -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
@@ -109,20 +109,29 @@
   </div>
 
   <script>
+    function parseJwt (token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
-      const waitOutseta = setInterval(() => {
-        if (typeof Outseta !== "undefined" && Outseta.auth?.getCurrentUser) {
-          clearInterval(waitOutseta);
-          Outseta.auth.getCurrentUser().then(function(response) {
-            const user = response.data;
-            document.getElementById("userName").textContent = user.firstName || "Utilisateur";
-            document.getElementById("userCredits").textContent = user.person?.Credits ?? "0";
-          }).catch(function(error) {
-            console.error("Erreur récupération crédits :", error);
-            document.getElementById("userCredits").textContent = "Erreur";
-          });
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("access_token");
+      if (token) {
+        const payload = parseJwt(token);
+        if (payload) {
+          document.getElementById("userName").textContent = payload.given_name || "Utilisateur";
+          document.getElementById("userCredits").textContent = payload["Credits"] ?? "0";
         }
-      }, 300);
+      }
     });
   </script>
 </body>
