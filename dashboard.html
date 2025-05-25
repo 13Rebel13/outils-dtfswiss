@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard – DTF Swiss</title>
 
-  <!-- Outseta script -->
+  <!-- Script de configuration Outseta -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
       load: 'auth,nocode,profile'
     };
   </script>
-  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" defer></script>
 
   <style>
     body {
@@ -28,7 +28,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .dashboard {
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       background: #fff;
       padding: 40px;
@@ -109,29 +109,18 @@
   </div>
 
   <script>
-    function parseJwt (token) {
-      try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-      } catch (e) {
-        return null;
-      }
-    }
-
     document.addEventListener("DOMContentLoaded", function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get("access_token");
-      if (token) {
-        const payload = parseJwt(token);
-        if (payload) {
-          document.getElementById("userName").textContent = payload.given_name || "Utilisateur";
-          document.getElementById("userCredits").textContent = payload["Credits"] ?? "0";
+      const checkUserInterval = setInterval(() => {
+        if (window.Outseta && Outseta.user && Outseta.user.person) {
+          const user = Outseta.user.person;
+          const prenom = user.firstName || "Utilisateur";
+          const credits = user.Credits ?? "0";
+
+          document.getElementById("userName").textContent = prenom;
+          document.getElementById("userCredits").textContent = credits;
+          clearInterval(checkUserInterval);
         }
-      }
+      }, 300);
     });
   </script>
 </body>
