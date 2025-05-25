@@ -4,10 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - DTF Swiss</title>
-  <script src="https://cdn.outseta.com/outseta.min.js"></script>
+
+  <!-- Configuration Outseta -->
   <script>
-    Outseta.init({ domain: "outils-dtfswiss.outseta.com" });
+    var o_options = {
+      domain: "outils-dtfswiss.outseta.com",
+      load: "auth,nocode,profile"
+    };
   </script>
+  <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" defer></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,6 +25,7 @@
     .header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 20px;
       background: white;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -38,6 +45,15 @@
       border-radius: 15px;
       text-decoration: none;
     }
+    .logout-btn {
+      background: #ff7675;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
     h1 { margin-top: 40px; }
     .tools {
       display: flex;
@@ -51,7 +67,7 @@
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 200px;
+      width: 240px;
       transition: transform 0.2s;
     }
     .tool:hover {
@@ -76,36 +92,48 @@
       Crédits : <span id="userCredits">...</span>
       <a href="https://outils-dtfswiss.outseta.com/auth">Acheter</a>
     </div>
-    <button onclick="Outseta.logout()" style="background:#ff7675; border:none; color:white; padding:10px 15px; border-radius:5px; cursor:pointer">Déconnexion</button>
+    <button onclick="Outseta.logout()" class="logout-btn">Déconnexion</button>
   </div>
 
-  <h1>Bienvenue sur les outils DTF Swiss</h1>
+  <h1>Bienvenue sur les outils DTF Swiss 👋</h1>
   <p>Tu es bien connecté.</p>
 
   <div class="tools">
     <div class="tool">
-      <img src="supprimer_le_fond.png" alt="Supprimer le fond">
-      <a href="https://outils.dtfswiss.ch/remove-bg.html">Supprimer le fond</a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
+      <a href="/remove-bg.html">Supprimer le fond</a>
     </div>
     <div class="tool">
-      <img src="ameliorer_image.png" alt="Améliorer l'image">
-      <a href="https://outils.dtfswiss.ch/upscale.html">Améliorer l'image</a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
+      <a href="/upscale.html">Améliorer l'image</a>
     </div>
     <div class="tool">
-      <img src="https://i.imgur.com/baJWw2B.png" alt="Vectoriser">
-      <a href="https://outils.dtfswiss.ch/vectorizer.html">Vectoriser</a>
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser">
+      <a href="/vectorizer.html">Vectoriser</a>
     </div>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      Outseta.getCurrentUser().then(function(user) {
-        const credits = user?.person?.Credits ?? 0;
-        document.getElementById("userCredits").textContent = credits;
-      }).catch(function(error) {
-        console.error("Erreur Outseta:", error);
-        document.getElementById("userCredits").textContent = "Erreur";
-      });
+    document.addEventListener("DOMContentLoaded", function () {
+      const el = document.getElementById("userCredits");
+
+      const check = setInterval(() => {
+        if (typeof Outseta === "undefined") return;
+
+        clearInterval(check);
+
+        Outseta.getCurrentUser().then(user => {
+          if (!user || !user.person) {
+            window.location.href = "/index.html";
+            return;
+          }
+
+          el.textContent = user.person.Credits ?? 0;
+        }).catch(err => {
+          console.error("Erreur Outseta :", err);
+          el.textContent = "Erreur";
+        });
+      }, 100);
     });
   </script>
 </body>
