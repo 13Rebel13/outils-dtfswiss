@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
+  <script>
+  // Si l'URL contient à tort l'URL complète en tant que "chemin"
+  const path = window.location.pathname;
+  if (path.startsWith("/https:/")) {
+    const fixedUrl = path.replace("/https:/", "https://").replace("//", "/");
+    window.location.href = fixedUrl;
+  }
+</script>
+
   <!-- ✅ Script Outseta recommandé -->
 <script>
 var o_options = {
