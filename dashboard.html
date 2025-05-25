@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Anti double slash et patch URL -->
+  <!-- ✅ Patch anti //https:// -->
   <script>
     (function () {
       const m = location.pathname.match(/\/\/https?:\/\/\//);
@@ -18,16 +18,16 @@
     })();
   </script>
 
-  <!-- ✅ Configuration Outseta (AVANT le script !) -->
+  <!-- ✅ Configuration Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss", // NE PAS ajouter .outseta.com ici
+      domain: "outils-dtfswiss",
       load: "auth,nocode,profile",
       monitorDom: true
     };
   </script>
 
-  <!-- ✅ Script Outseta -->
+  <!-- ✅ Script SDK Outseta -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <style>
@@ -99,7 +99,7 @@
     </a>
   </div>
 
-  <!-- ✅ Script de lecture des infos utilisateur -->
+  <!-- ✅ Script Outseta dynamique -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
@@ -108,7 +108,6 @@
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
-
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
             const credits = user.Credits;
