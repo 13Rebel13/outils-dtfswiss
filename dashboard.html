@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard – DTF Swiss</title>
 
-  <!-- Script de configuration Outseta -->
+  <!-- Script Outseta -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
@@ -26,6 +26,26 @@
       background: #fff;
       padding: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .top-right {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .top-right a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    .credits {
+      font-size: 1.2rem;
+      color: #333;
     }
     .dashboard {
       max-width: 900px;
@@ -34,12 +54,6 @@
       padding: 40px;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-    h1 { margin-bottom: 10px; }
-    .credits {
-      margin-bottom: 30px;
-      font-size: 1.2rem;
-      color: #333;
     }
     .tools {
       display: flex;
@@ -53,6 +67,10 @@
       border-radius: 10px;
       width: 200px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .tool:hover {
+      transform: scale(1.05);
     }
     .tool img {
       width: 100%;
@@ -65,24 +83,12 @@
       text-decoration: none;
       color: #2d3436;
     }
-    .top-right {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    .top-right a {
-      margin-left: 15px;
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-    }
   </style>
 </head>
-
 <body>
   <header>
     <div class="top-right">
-      <a href="https://outils-dtfswiss.outseta.com/profile#o-authenticated">Mon profil</a>
+      <a href="https://outils-dtfswiss.outseta.com/profile#o-authenticated" target="_blank">Mon profil</a>
       <a href="#o-logout-link">Déconnexion</a>
     </div>
     <h1>Bienvenue <span id="userName">...</span> 👋</h1>
@@ -110,15 +116,12 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const checkUserInterval = setInterval(() => {
+      const checkUser = setInterval(() => {
         if (window.Outseta && Outseta.user && Outseta.user.person) {
-          const user = Outseta.user.person;
-          const prenom = user.firstName || "Utilisateur";
-          const credits = user.Credits ?? "0";
-
-          document.getElementById("userName").textContent = prenom;
-          document.getElementById("userCredits").textContent = credits;
-          clearInterval(checkUserInterval);
+          const person = Outseta.user.person;
+          document.getElementById("userName").textContent = person.firstName || "Utilisateur";
+          document.getElementById("userCredits").textContent = person.Credits ?? "0";
+          clearInterval(checkUser);
         }
       }, 300);
     });
