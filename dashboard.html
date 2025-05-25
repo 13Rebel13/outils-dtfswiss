@@ -5,31 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Patch anti URL doublée -->
+  <!-- 🔧 Patch anti //https:// pour éviter les doublons d’URL -->
   <script>
     (function () {
-      const path = window.location.pathname;
-      if (path.startsWith("/https:/") || path.startsWith("/http:/")) {
+      const match = location.pathname.match(/\/\/https?:\/\/\//);
+      if (match) {
         try {
-          const u = new URL(path.slice(1));
-          window.location.replace(u.pathname + u.search + u.hash || "/");
-        } catch (e) {
-          console.warn("Échec de redirection URL propre :", e);
-        }
+          const url = new URL(location.pathname.slice(1));
+          location.replace(url.pathname + url.search + url.hash || "/");
+        } catch (e) {}
       }
     })();
   </script>
 
-  <!-- ✅ Configuration classique d’Outseta -->
+  <!-- ✅ Configuration Outseta -->
   <script>
     window._outsetaConfig = {
-      domain: "outils-dtfswiss",
+      domain: "outils-dtfswiss", // ⚠️ SANS .outseta.com
       load: "auth,nocode,profile",
       monitorDom: true
     };
   </script>
-
-  <!-- ✅ SDK Outseta (chargé proprement avec defer) -->
   <script src="https://cdn.outseta.com/outseta.min.js" defer></script>
 
   <!-- ✅ Styles -->
@@ -40,42 +36,36 @@
       padding: 50px;
       margin: 0;
     }
-
     .dashboard-container {
       max-width: 800px;
       margin: auto;
       background: white;
       border-radius: 12px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
-
     h1 {
       font-size: 2rem;
     }
-
     .credit-count {
       margin: 20px 0;
       font-size: 1.3rem;
       color: #333;
     }
-
     .tool-link {
       display: block;
       margin: 30px auto;
       text-decoration: none;
       max-width: 350px;
     }
-
     .tool-link img {
       width: 100%;
       border-radius: 10px;
       margin-bottom: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s;
     }
-
     .tool-link img:hover {
       transform: scale(1.03);
     }
@@ -90,32 +80,31 @@
     </div>
 
     <a class="tool-link" href="/supprimer-fond.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond">
     </a>
 
     <a class="tool-link" href="/ameliorer-image.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image">
     </a>
 
     <a class="tool-link" href="/vectoriser-image.html">
-      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image" />
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image">
     </a>
   </div>
 
-  <!-- ✅ Script dynamique pour afficher le prénom et les crédits -->
+  <!-- ✅ Script dynamique Outseta -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const checkOutsetaLoaded = setInterval(() => {
+      const interval = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-
-        clearInterval(checkOutsetaLoaded);
+        clearInterval(interval);
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
-
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-            document.getElementById("creditCount").innerText = user.Credits ?? "0";
+            const credits = user.Credits;
+            document.getElementById("creditCount").innerText = credits ?? "0";
           } else {
             alert("Utilisateur non identifié !");
           }
