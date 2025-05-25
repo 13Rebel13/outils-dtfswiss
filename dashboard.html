@@ -114,28 +114,24 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const creditsEl = document.getElementById("userCredits");
+   document.addEventListener("DOMContentLoaded", function() {
+  if (typeof Outseta === "undefined") {
+    alert("Erreur : Outseta n'est pas chargé !");
+    return;
+  }
 
-      // Attendre que Outseta charge bien
-      const check = setInterval(() => {
-        if (typeof Outseta === "undefined") return;
+  Outseta.getCurrentUser().then(user => {
+    if (!user || !user.person) {
+      window.location.href = "/index.html"; // sécurité
+      return;
+    }
 
-        clearInterval(check);
-
-        Outseta.getCurrentUser().then(user => {
-          if (!user || !user.person) {
-            window.location.href = "/index.html"; // redirection sécurisée
-            return;
-          }
-
-          creditsEl.textContent = user.person.Credits ?? 0;
-        }).catch(err => {
-          console.error("Erreur Outseta:", err);
-          creditsEl.textContent = "Erreur";
-        });
-      }, 100);
-    });
+    document.getElementById("userCredits").textContent = user.person.Credits ?? 0;
+  }).catch(err => {
+    console.error("Erreur Outseta :", err);
+    document.getElementById("userCredits").textContent = "Erreur";
+  });
+});
   </script>
 </body>
 </html>
