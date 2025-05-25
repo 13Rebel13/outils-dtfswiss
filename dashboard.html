@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - DTF Swiss</title>
 
-  <!-- Configuration Outseta propre -->
+  <!-- Configuration Outseta -->
   <script>
     var o_options = {
-      domain: 'outils-dtfswiss.outseta.com',
-      load: 'auth,nocode,profile'
+      domain: "outils-dtfswiss.outseta.com",
+      load: "auth,nocode,profile"
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options" defer></script>
@@ -114,24 +114,27 @@
   </div>
 
   <script>
-   document.addEventListener("DOMContentLoaded", function() {
-  if (typeof Outseta === "undefined") {
-    alert("Erreur : Outseta n'est pas chargé !");
-    return;
-  }
+    document.addEventListener("DOMContentLoaded", function () {
+      const el = document.getElementById("userCredits");
 
-  Outseta.getCurrentUser().then(user => {
-    if (!user || !user.person) {
-      window.location.href = "/index.html"; // sécurité
-      return;
-    }
+      const check = setInterval(() => {
+        if (typeof Outseta === "undefined") return;
 
-    document.getElementById("userCredits").textContent = user.person.Credits ?? 0;
-  }).catch(err => {
-    console.error("Erreur Outseta :", err);
-    document.getElementById("userCredits").textContent = "Erreur";
-  });
-});
+        clearInterval(check);
+
+        Outseta.getCurrentUser().then(user => {
+          if (!user || !user.person) {
+            window.location.href = "/index.html";
+            return;
+          }
+
+          el.textContent = user.person.Credits ?? 0;
+        }).catch(err => {
+          console.error("Erreur Outseta :", err);
+          el.textContent = "Erreur";
+        });
+      }, 100);
+    });
   </script>
 </body>
 </html>
