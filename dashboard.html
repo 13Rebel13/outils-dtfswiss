@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Tableau de bord DTF Swiss</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Script Outseta (chargé AVANT l’appel JS) -->
+  <!-- ✅ Script Outseta recommandé -->
   <script>
     var o_options = {
       domain: 'outils-dtfswiss.outseta.com',
-      load: 'auth,nocode,profile'
+      load: 'auth,customForm,emailList,leadCapture,nocode,profile,support'
     };
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
@@ -20,7 +20,6 @@
       background: #f4f4f4;
       padding: 50px;
       margin: 0;
-      text-align: center;
     }
 
     .dashboard-container {
@@ -30,6 +29,7 @@
       border-radius: 12px;
       padding: 40px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
     h1 {
@@ -41,22 +41,52 @@
       font-size: 1.3rem;
       color: #333;
     }
+
+    .tool-link {
+      display: block;
+      margin: 30px auto;
+      text-decoration: none;
+      max-width: 350px;
+    }
+
+    .tool-link img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .tool-link img:hover {
+      transform: scale(1.03);
+    }
   </style>
 </head>
-
 <body>
   <div class="dashboard-container">
     <h1>Bienvenue <span id="userName">...</span> 👋</h1>
     <div class="credit-count">
       Crédits disponibles : <span id="creditCount">...</span>
     </div>
+
+    <a class="tool-link" href="/supprimer-fond.html">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_suppression_arriere_plan.png?v=1747549910" alt="Supprimer le fond" />
+    </a>
+
+    <a class="tool-link" href="/ameliorer-image.html">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_amelioration_image.png?v=1747549910" alt="Améliorer l'image" />
+    </a>
+
+    <a class="tool-link" href="/vectoriser-image.html">
+      <img src="https://cdn.shopify.com/s/files/1/0899/3154/7011/files/Bouton_vectoriser.png?v=1747549910" alt="Vectoriser l'image" />
+    </a>
   </div>
 
-  <!-- ✅ Script dynamique pour afficher nom et crédits -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
+
         clearInterval(checkOutsetaLoaded);
 
         Outseta.onReady(function () {
@@ -64,7 +94,8 @@
 
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
-            document.getElementById("creditCount").innerText = user.Credits ?? "0";
+            const credits = user.Credits;
+            document.getElementById("creditCount").innerText = credits ?? "0";
           } else {
             alert("Utilisateur non identifié !");
           }
