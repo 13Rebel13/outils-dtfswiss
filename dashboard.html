@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
+  <!-- ✅ Correction automatique si l'URL est malformée (doublée) -->
+  <script>
+    if (window.location.href.includes("/https://")) {
+      const cleanedUrl = window.location.href.replace("/https://", "https://");
+      window.location.replace(cleanedUrl);
+    }
+  </script>
+
   <!-- ✅ Script Outseta recommandé -->
   <script>
     var o_options = {
@@ -89,7 +97,6 @@
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-
         clearInterval(checkOutsetaLoaded);
 
         Outseta.onReady(function () {
