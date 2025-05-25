@@ -5,20 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
+  <!-- ✅ Patch anti URL doublée -->
   <script>
-  (function () {
-    const path = location.pathname;
-    const match = path.match(/^\/https?:\/\//);
-    if (match) {
-      try {
-        const cleanUrl = new URL(path.slice(1));
-        location.replace(cleanUrl.pathname + cleanUrl.search + cleanUrl.hash || "/");
-      } catch (e) {
-        console.warn("URL cleaning failed", e);
+    (function () {
+      const url = window.location.href;
+      const doubleUrlMatch = url.match(/https:\/\/[^/]+\/https:\/\/[^/]+/);
+
+      if (doubleUrlMatch) {
+        const cleanedUrl = url.replace(/https:\/\/[^/]+\/(https:\/\/[^"]+)/, '$1');
+        window.location.replace(cleanedUrl);
       }
-    }
-  })();
-</script>
+    })();
+  </script>
 
   <!-- ✅ Script Outseta recommandé -->
   <script>
