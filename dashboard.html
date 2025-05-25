@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
+  <script>
+  (function () {
+    const path = location.pathname;
+    const match = path.match(/^\/https?:\/\//);
+    if (match) {
+      try {
+        const cleanUrl = new URL(path.slice(1));
+        location.replace(cleanUrl.pathname + cleanUrl.search + cleanUrl.hash || "/");
+      } catch (e) {
+        console.warn("URL cleaning failed", e);
+      }
+    }
+  })();
+</script>
+
   <!-- ✅ Script Outseta recommandé -->
   <script>
     var o_options = {
