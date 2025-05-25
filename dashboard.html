@@ -14,6 +14,14 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
+  <!-- ✅ Patch anti //https:// doublé dans l’URL -->
+  <script>
+    if (location.pathname.startsWith("/https:/")) {
+      const fixedPath = location.pathname.replace(/^\/https:\/\//, "/");
+      window.location.replace(fixedPath + location.search + location.hash);
+    }
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -62,6 +70,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="dashboard-container">
     <h1>Bienvenue <span id="userName">...</span> 👋</h1>
@@ -82,16 +91,15 @@
     </a>
   </div>
 
+  <!-- ✅ Chargement des infos utilisateur depuis Outseta -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const checkOutsetaLoaded = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-
         clearInterval(checkOutsetaLoaded);
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
-
           if (user) {
             document.getElementById("userName").innerText = user.firstName || "Utilisateur";
             const credits = user.Credits;
