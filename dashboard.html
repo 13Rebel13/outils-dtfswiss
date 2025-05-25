@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DTF Swiss - Tableau de bord</title>
 
-  <!-- ✅ Patch anti URL doublée -->
-  <script>
-    (function () {
-      const url = window.location.href;
-      const doubleUrlMatch = url.match(/https:\/\/[^/]+\/https:\/\/[^/]+/);
-
-      if (doubleUrlMatch) {
-        const cleanedUrl = url.replace(/https:\/\/[^/]+\/(https:\/\/[^"]+)/, '$1');
-        window.location.replace(cleanedUrl);
-      }
-    })();
-  </script>
-
   <!-- ✅ Script Outseta recommandé -->
   <script>
     var o_options = {
@@ -27,14 +14,7 @@
   </script>
   <script src="https://cdn.outseta.com/outseta.min.js" data-options="o_options"></script>
 
-  <!-- ✅ Patch anti //https:// doublé dans l’URL -->
-  <script>
-  if (window.location.pathname.includes("/https://outils.dtfswiss.ch/")) {
-    const cleaned = window.location.pathname.replace("/https://outils.dtfswiss.ch/", "/");
-    window.location.replace(cleaned + window.location.search + window.location.hash);
-  }
-</script>
-
+  <!-- ✅ Style -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -42,7 +22,6 @@
       padding: 50px;
       margin: 0;
     }
-
     .dashboard-container {
       max-width: 800px;
       margin: auto;
@@ -52,24 +31,20 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
-
     h1 {
       font-size: 2rem;
     }
-
     .credit-count {
       margin: 20px 0;
       font-size: 1.3rem;
       color: #333;
     }
-
     .tool-link {
       display: block;
       margin: 30px auto;
       text-decoration: none;
       max-width: 350px;
     }
-
     .tool-link img {
       width: 100%;
       border-radius: 10px;
@@ -77,7 +52,6 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.2s;
     }
-
     .tool-link img:hover {
       transform: scale(1.03);
     }
@@ -104,12 +78,12 @@
     </a>
   </div>
 
-  <!-- ✅ Chargement des infos utilisateur depuis Outseta -->
+  <!-- ✅ Script pour récupérer l'utilisateur et afficher les crédits -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const checkOutsetaLoaded = setInterval(() => {
+      const waitForOutseta = setInterval(() => {
         if (typeof Outseta === "undefined") return;
-        clearInterval(checkOutsetaLoaded);
+        clearInterval(waitForOutseta);
 
         Outseta.onReady(function () {
           const user = Outseta.getCurrentUser();
